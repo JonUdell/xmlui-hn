@@ -1,0 +1,24 @@
+<App>
+
+    <H1>Recent HackerNews stories</H1>
+
+    <DataSource id="hn" url="http://hn.jonudell.info:8081/query"
+        body='{{"sql":"select row_number() over () as rownum, * from hn where url is not null order by rownum limit 10000"}}' method="POST" />
+
+    <HStack>
+
+        <Theme>
+            <List data="{hn}" width="50%" height="800px">
+                <Card title="{$item.title}">
+                    <Text>
+                        {$item.rownum} {$item.by} at {$item.time.slice(0, 16)}
+                    </Text>
+                    <Markdown content="{'[link](' + $item.url + ')' }"/>   
+                </Card>
+            </List>
+        </Theme>
+
+
+    </HStack>
+
+</App>
