@@ -1,0 +1,16 @@
+<Component name="Days">
+
+    <DataSource id="days" url="http://hn.jonudell.info:8081/query" 
+        body='{ { "sql": "select count(distinct substr(time, 1, 10)) as count from hn" } }'
+        method="POST" />
+
+    <HStack>
+        <Card title="days">
+            <Items data="{days}">
+                <Text>{$item.count}</Text>
+            </Items>
+        </Card>
+    </HStack>
+
+</Component>
+

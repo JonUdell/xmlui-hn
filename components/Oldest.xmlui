@@ -1,0 +1,15 @@
+<Component name="Oldest">
+
+
+    <DataSource id="oldest" url="http://hn.jonudell.info:8081/query" body='{{"sql":"select min(time) as min from hn"}}'
+        method="POST" />
+
+    <HStack>
+        <Card title="oldest">
+            <Items data="{oldest}">
+                <Text>{$item.min.slice(0,10)}</Text>
+            </Items>
+        </Card>
+    </HStack>
+
+</Component>

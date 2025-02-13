@@ -1,24 +1,35 @@
 <App>
 
-    <H1>Recent HackerNews stories</H1>
+    <FlowLayout>
+        <Total width="10%" />
+        <AskHN width="10%" />
+        <ShowHN width="10%" />
+        <Days width="10%" />
+        <Oldest width="10%" />
+        <Newest width="10%" />
+        <MaxScore width="10%" />
+    </FlowLayout>
 
-    <DataSource id="hn" url="http://hn.jonudell.info:8081/query"
-        body='{{"sql":"select row_number() over () as rownum, * from hn where url is not null order by rownum limit 10000"}}' method="POST" />
+    <FlowLayout>
 
-    <HStack>
+        <HackerNewsRecent width="50%" />
 
-        <Theme>
-            <List data="{hn}" width="50%" height="800px">
-                <Card title="{$item.title}">
-                    <Text>
-                        {$item.rownum} {$item.by} at {$item.time.slice(0, 16)}
-                    </Text>
-                    <Markdown content="{'[link](' + $item.url + ')' }"/>   
-                </Card>
-            </List>
-        </Theme>
+        <CompanyMentions7 width="25%" />
+
+        <!--
+
+        <Card width="50%" height="350px">
+            <H1>Traffic summary</H1>
+            <DataSource id="trafficSummarySrc" url="/trafficSummary.json" />
+            <Spinner when="{trafficSummarySrc.inProgress}" />
+            <Text>Using &lt;Chart /></Text>
+            <Text> trafficSummarySrc {JSON.stringify(trafficSummarySrc)} /></Text>
+            <Chart type="bar" stacked="true" height="*" labels="{trafficSummarySrc.value.chart.labels}"
+                series="{trafficSummarySrc.value.chart.series}" />
+        </Card>
+
+        -->
 
 
-    </HStack>
-
+    </FlowLayout>
 </App>
