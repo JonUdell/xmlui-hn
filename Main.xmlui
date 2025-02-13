@@ -12,9 +12,11 @@
 
     <FlowLayout>
 
-        <HackerNewsRecent width="50%" />
+        <HackerNewsRecentListOfText width="35%" />
 
         <CompanyMentions7 width="25%" />
+
+        <LanguageMentions7 width="25%" />
 
         <!--
 

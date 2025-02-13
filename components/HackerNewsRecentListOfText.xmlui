@@ -1,0 +1,21 @@
+<Component name="HackerNewsRecentListOfText">
+
+    <VStack>
+  
+        <DataSource id="recent" url="http://hn.jonudell.info:8081/query"
+        body='{{"sql":"select * from hn where url is not null order by time desc limit 5"}}' method="POST" />
+  
+      <H1>Recent HackerNews stories</H1>
+  
+      <Items data="{recent}">
+        <Text style="line-height:.5" preserveLinebreaks="true" value="
+{ $item.title }
+by {$item.by} at {$item.time.slice(0, 10)}
+score: {$item.score} {$item.descendants ? 'comments: ' + $item.descendants : ''}" />
+          <Link style="margin-left: 20px" to="{$item.url}" target="_blank">link</Link>
+      </Items>
+
+  
+    </VStack>
+  
+  </Component>
