@@ -1,15 +1,13 @@
 <App>
 
-    <Text>{ JSON.stringify(window.sql) }</Text>
-
     <FlowLayout>
-        <Total     width="12%" />
-        <AskHN     width="12%" />
-        <ShowHN    width="12%" />
-        <InfoCard  width="12%" title="days" sql = '{window.sql.days}' />
-        <Oldest    width="12%" />
-        <Newest    width="12%" />
-        <MaxScore  width="12%" />
+        <InfoCard width="12%" title="stories" sql='{window.sql.stories}' />
+        <InfoCard width="12%" title="ask hn" sql='{window.sql.askhn}' />
+        <InfoCard width="12%" title="show hn" sql='{window.sql.showhn}' />
+        <InfoCard width="12%" title="days" sql='{window.sql.days}' />
+        <InfoCard width="12%" title="oldest" sql='{window.sql.oldest}' />
+        <InfoCard width="12%" title="newest" sql='{window.sql.newest}' />
+        <InfoCard width="12%" title="max score" sql='{window.sql.maxscore}' />
     </FlowLayout>
 
     <FlowLayout>

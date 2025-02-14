@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,10 +8,19 @@
     <script src="xmlui/xmlui-charts.js"></script>
     <script>
         window.sql = {
-            "days" : { "sql" : "select count(distinct substr(time, 1, 10)) as count from hn" }
+            "stories": { "sql": "select count(*) as value from hn" },
+            "days": { "sql": "select count(distinct substr(time, 1, 10)) as value from hn" },   
+            "askhn": { "sql": "select count(*) as value from hn where title like '%Ask HN%'" },
+            "showhn": { "sql": "select count(*) as value from hn where title like '%Show HN%'" },
+            "oldest": {"sql":"select substr(min(time),0,11) as value from hn"},
+            "newest": {"sql":"select substr(max(time),0,11) as value from hn"},
+            "maxscore": {"sql":"select max(score) as value from hn"},
+
         }
     </script>
 </head>
+
 <body>
 </body>
+
 </html>
