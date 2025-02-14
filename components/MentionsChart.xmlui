@@ -5,7 +5,7 @@
     <VStack>
         <H1>{$props.title}</H1>
 
-        <Card height="300px">
+        <Card width="300px" height="300px">
             <XMLUIExtensions:PieChart data="{mentions.value}" dataKey="mentions" nameKey="name" />
         </Card>
 

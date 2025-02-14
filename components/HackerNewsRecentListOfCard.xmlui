@@ -1,6 +1,5 @@
 <Component name="HackerNewsRecentListOfCard">
 
-
     <DataSource id="recent" url="http://hn.jonudell.info:8081/query"
       body='{{"sql":"select * from hn where url is not null order by time desc limit 5"}}' method="POST" />
 
