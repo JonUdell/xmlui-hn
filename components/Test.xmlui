@@ -1,9 +1,0 @@
-<Component name="Test">
-
-    <Text>
-        sql: { sql() }
-    </Text>
-
-
-
-</Component>
