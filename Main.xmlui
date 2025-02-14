@@ -14,28 +14,9 @@
 
         <HackerNewsRecentListOfCard width="35%" />
 
-        <!--
-        <Text width="10%"> { sql() } </Text>
-        -->
+        <MentionsChart title="Companies: last 7 days" width="30%" sql='{window.sql.companymentions7}' />
 
-        <CompanyMentions7 width="30%" />
-
-        <LanguageMentions7 width="30%" />
-
-        <!--
-
-        <Card width="50%" height="350px">
-            <H1>Traffic summary</H1>
-            <DataSource id="trafficSummarySrc" url="/trafficSummary.json" />
-            <Spinner when="{trafficSummarySrc.inProgress}" />
-            <Text>Using &lt;Chart /></Text>
-            <Text> trafficSummarySrc {JSON.stringify(trafficSummarySrc)} /></Text>
-            <Chart type="bar" stacked="true" height="*" labels="{trafficSummarySrc.value.chart.labels}"
-                series="{trafficSummarySrc.value.chart.series}" />
-        </Card>
-
-        -->
-
+        <MentionsChart title="Languages: last 7 days" width="30%" sql='{window.sql.languagementions7}' />
 
     </FlowLayout>
 </App>

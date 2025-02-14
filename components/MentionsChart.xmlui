@@ -1,0 +1,14 @@
+<Component name="MentionsChart" xmlns:XMLUIExtensions="component-ns">
+
+    <DataSource id="mentions" url="http://hn.jonudell.info:8081/query" body='{ $props.sql }' method="POST" />
+
+    <VStack>
+        <H1>{$props.title}</H1>
+
+        <Card height="300px">
+            <XMLUIExtensions:PieChart data="{mentions.value}" dataKey="mentions" nameKey="name" />
+        </Card>
+
+    </VStack>
+
+</Component>

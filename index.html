@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="xmlui/0.7.21.js"></script>
+    <script src="xmlui/0.7.23.js"></script>
     <script src="xmlui/xmlui-charts.js"></script>
     <script>
+        window.mentions = function(names, days) {
+            alert("WITH RECURSIVE names(name, remaining) AS ( SELECT '', '__NAMES__' UNION ALL SELECT substr(remaining, 1, instr(remaining, ',') - 1), substr(remaining, instr(remaining, ',') + 1) FROM names WHERE remaining != '' ), counts AS ( SELECT name, ( SELECT COUNT(*) FROM hn WHERE LOWER(title) LIKE '%' || LOWER(names.name) || '%' AND (julianday('now') - julianday(datetime(substr(time, 1, 19)))) * 24 * 60 BETWEEN 0 AND 7*1440 AND time IS NOT NULL ) AS mentions FROM names WHERE name != '' ) SELECT name, mentions FROM counts WHERE mentions > 0 ORDER BY mentions DESC;")
+        }
         window.sql = {
             "stories": { "sql": "select count(*) as value from hn" },
             "days": { "sql": "select count(distinct substr(time, 1, 10)) as value from hn" },   
@@ -15,7 +18,8 @@
             "oldest": {"sql":"select substr(min(time),0,11) as value from hn"},
             "newest": {"sql":"select substr(max(time),0,11) as value from hn"},
             "maxscore": {"sql":"select max(score) as value from hn"},
-
+            "companymentions7" : {"sql": "WITH RECURSIVE names(name, remaining) AS ( SELECT '', 'amazon,microsoft,apple,google,tesla,spacex,openai,' UNION ALL SELECT substr(remaining, 1, instr(remaining, ',') - 1), substr(remaining, instr(remaining, ',') + 1) FROM names WHERE remaining != '' ), counts AS ( SELECT name, ( SELECT COUNT(*) FROM hn WHERE LOWER(title) LIKE '%' || LOWER(names.name) || '%' AND (julianday('now') - julianday(datetime(substr(time, 1, 19)))) * 24 * 60 BETWEEN 0 AND 7*1440 AND time IS NOT NULL ) AS mentions FROM names WHERE name != '' ) SELECT name, mentions FROM counts WHERE mentions > 0 ORDER BY mentions DESC;" },
+            "languagementions7" : { "sql": "WITH RECURSIVE names(name, remaining) AS ( SELECT '', 'rust,python,javascript,sql,typescript,webassembly,swift,haskell,html,css,' UNION ALL SELECT substr(remaining, 1, instr(remaining, ',') - 1), substr(remaining, instr(remaining, ',') + 1) FROM names WHERE remaining != '' ), counts AS ( SELECT name, ( SELECT COUNT(*) FROM hn WHERE LOWER(title) LIKE '%' || LOWER(names.name) || '%' AND (julianday('now') - julianday(datetime(substr(time, 1, 19)))) * 24 * 60 BETWEEN 0 AND 7*1440 AND time IS NOT NULL ) AS mentions FROM names WHERE name != '' ) SELECT name, mentions FROM counts WHERE mentions > 0 ORDER BY mentions DESC;" }
         }
     </script>
 </head>
