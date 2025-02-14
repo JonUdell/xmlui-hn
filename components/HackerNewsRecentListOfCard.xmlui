@@ -1,7 +1,5 @@
 <Component name="HackerNewsRecentListOfCard">
 
-  <VStack>
-
 
     <DataSource id="recent" url="http://hn.jonudell.info:8081/query"
       body='{{"sql":"select * from hn where url is not null order by time desc limit 5"}}' method="POST" />
@@ -9,7 +7,7 @@
     <H1>Recent HackerNews stories</H1>
 
     <List data="{recent}">
-      <Card class="hn-card" title="{$item.title}">
+      <Card gap="0" title="{$item.title}">
         <Link to="{$item.url}" target="_blank">
         by {$item.by} at {$item.time.slice(0, 10)}
         </Link>
@@ -18,7 +16,5 @@
         </Text>
       </Card>
     </List>
-
-  </VStack>
 
 </Component>

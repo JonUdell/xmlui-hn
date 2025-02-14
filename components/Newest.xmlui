@@ -4,12 +4,10 @@
     <DataSource id="newest" url="http://hn.jonudell.info:8081/query" body='{{"sql":"select max(time) as max from hn"}}'
         method="POST" />
 
-    <HStack>
         <Card title="newest">
             <Items data="{newest}">
                 <Text>{$item.max.slice(0,10)}</Text>
             </Items>
         </Card>
-    </HStack>
 
 </Component>

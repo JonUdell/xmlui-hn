@@ -1,0 +1,13 @@
+<Component name="InfoCard">
+
+    <Text>{ JSON.stringify($props.sql)}</Text>
+
+    <DataSource id="data" url="http://hn.jonudell.info:8081/query" body='{ $props.sql }' method="POST" />
+
+    <Card gap="0" title="{$props.title}">
+        <Items data="{data}">
+            <Text>{$item.count}</Text>
+        </Items>
+    </Card>
+
+</Component>

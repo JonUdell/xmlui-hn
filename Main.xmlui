@@ -1,26 +1,28 @@
 <App>
 
+    <Text>{ JSON.stringify(window.sql) }</Text>
+
     <FlowLayout>
-        <Total width="10%" />
-        <AskHN width="10%" />
-        <ShowHN width="10%" />
-        <Days width="10%" />
-        <Oldest width="10%" />
-        <Newest width="10%" />
-        <MaxScore width="10%" />
+        <Total     width="12%" />
+        <AskHN     width="12%" />
+        <ShowHN    width="12%" />
+        <InfoCard  width="12%" title="days" sql = '{window.sql.days}' />
+        <Oldest    width="12%" />
+        <Newest    width="12%" />
+        <MaxScore  width="12%" />
     </FlowLayout>
 
     <FlowLayout>
 
-        <HackerNewsRecentListOfText width="35%" />
+        <HackerNewsRecentListOfCard width="35%" />
 
         <!--
         <Text width="10%"> { sql() } </Text>
         -->
 
-        <CompanyMentions7 width="25%" />
+        <CompanyMentions7 width="30%" />
 
-        <LanguageMentions7 width="25%" />
+        <LanguageMentions7 width="30%" />
 
         <!--
 

@@ -4,13 +4,11 @@
         body='{ { "sql": "select max(cast( score as int)) as max from hn" } }'
         method="POST" />
 
-    <HStack>
         <Card title="max score">
             <Items data="{max}">
                 <Text>{$item.max}</Text>
             </Items>
         </Card>
-    </HStack>
 
 </Component>
 
