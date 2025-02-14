@@ -14,6 +14,10 @@
 
         <HackerNewsRecentListOfText width="35%" />
 
+        <!--
+        <Text width="10%"> { sql() } </Text>
+        -->
+
         <CompanyMentions7 width="25%" />
 
         <LanguageMentions7 width="25%" />
