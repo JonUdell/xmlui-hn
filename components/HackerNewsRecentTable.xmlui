@@ -2,15 +2,14 @@
 
     <VStack>
   
-        <DataSource id="recent" url="http://hn.jonudell.info:8081/query"
-        body='{{"sql":"select * from hn where url is not null order by time desc limit 5"}}' method="POST" />
-  
       <H1>Recent HackerNews stories</H1>
   
-      <Table data="{recent}">
+      <Table data="{$props.data}">
+        <Column bindTo="id"/>
         <Column bindTo="title"/>
         <Column bindTo="by"/>
         <Column bindTo="time"/>
+        <Column bindTo="url"/>
         <Column bindTo="score"/>
         <Column bindTo="descendants"/>
       </Table>

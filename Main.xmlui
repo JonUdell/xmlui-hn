@@ -1,43 +1,43 @@
-<App>
+<App logo="resources/xmlui-logo.svg">
 
-    <FlowLayout>
-        <InfoCard width="12%" title="stories" sql='{window.sql.stories}' />
-        <InfoCard width="12%" title="ask hn" sql='{window.sql.askhn}' />
-        <InfoCard width="12%" title="show hn" sql='{window.sql.showhn}' />
-        <InfoCard width="12%" title="days" sql='{window.sql.days}' />
-        <InfoCard width="12%" title="oldest" sql='{window.sql.oldest}' />
-        <InfoCard width="12%" title="newest" sql='{window.sql.newest}' />
-        <InfoCard width="12%" title="max score" sql='{window.sql.maxscore}' />
-    </FlowLayout>
+    <NavPanel>
+        <NavLink label="Recent (cards)" to="/" />
+        <NavLink label="Recent (texts)" to="/recentTexts" />
+        <NavLink label="Recent (table)" to="/recentTable" />
+        <NavLink label="Recent (markdown text)" to="/recentMarkdownText" />
+        <NavLink label="Recent (markdown table)" to="/recentMarkdownTable" />
+        <NavLink label="Mentions" to="/mentions" />
+    </NavPanel>
+    <Pages>
+        <Page url="/">
+            <InfoCards />
+            <HackerNewsRecentListOfCard data="{recent}" />
+        </Page>
+        <Page url="/recentTexts">
+            <InfoCards />
+            <HackerNewsRecentListOfText data="{recent}" />
+        </Page>
+        <Page url="/recentTable">
+            <InfoCards />
+            <HackerNewsRecentTable data="{recent}" />
+        </Page>
+        <Page url="/recentMarkdownText">
+            <InfoCards />
+            <HackerNewsRecentMarkdownText data="{recent}" />
+        </Page>
+        <Page url="/recentMarkdownTable">
+            <InfoCards />
+            <HackerNewsRecentMarkdownTable data="{recent}" />
+        </Page>
+        <Page url="/mentions">
+            <MentionsPage />
+        </Page>
+    </Pages>
+    <Footer>
+        Powered by XMLUI
+    </Footer>
 
-    <FlowLayout>
-
-        <HackerNewsRecentListOfCard width="35%" />
-
-        <!-- made a component hoping to respect width, no effect, so hardcoded 300px 
-         in underlying MentionsChart -->
-         
-        <CompanyAndLanguageMentions width="65%" />
-
-    </FlowLayout>
-
-    <FlowLayout>
-
-        <!-- another way to do the same thing. componentizing this as above makes it easier to 
-         reason about the layout ... if width works.   -->
-
-        <HStack>
-            <MentionsChart  title="Companies: last 7 days" sql='{window.sql.companymentions7}' />
-            <MentionsChart title="Companies: last 30 days" sql='{window.sql.companymentions30}' />
-        </HStack>
-    
-        <HStack>
-            <MentionsChart title="Languages: last 7 days" sql='{window.sql.languagementions7}' />
-            <MentionsChart title="Languages: last 30 days" sql='{window.sql.languagementions30}' />
-        </HStack>
-    
-
-    </FlowLayout>
-
+    <DataSource id="recent" url="http://hn.jonudell.info:8081/query" method="POST"
+    body='{{"sql":"select * from hn where url is not null order by score desc limit 2 "}}' />
 
 </App>
