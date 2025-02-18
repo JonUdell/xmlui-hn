@@ -33,11 +33,13 @@
             <MentionsPage />
         </Page>
     </Pages>
+
+
+
     <Footer>
         Powered by XMLUI
     </Footer>
 
-    <DataSource id="recent" url="http://hn.jonudell.info:8081/query" method="POST"
-    body='{{"sql":"select * from hn where url is not null order by score desc limit 50 "}}' />
+    <DataSource id="recent" url="http://hn.jonudell.info:8081/query" method="POST" body='{window.sql.recent50}' />
 
 </App>

@@ -3,8 +3,8 @@
   <H1>Recent HackerNews stories</H1>
 
   <Markdown style="text-align:left" content="{
-    '| ID | Title | By | Score | Comments | Url |\n|---|---|---|---|---|--|\n'
-    + $props.data.map( i => '|[' + i.id + '](https://news.ycombinator.com/i?id=' + i.id + ')|*' + i.title + '*|' + i.by + '|' + i.score + '|' + i.descendants + '|' + i.url + '|\n' ).join('')
+    '| ID | Title | By | Time | Score | Comments | Url |\n|---|---|---|---|---|--|--|\n'
+    + $props.data.map( i => '|[' + i.id + '](https://news.ycombinator.com/?id=' + i.id + ')|*' + i.title + '*|' + i.by + '|' + i.time + '|' + i.score + '|' + i.descendants + '|' + i.url + '|\n' ).join('')
    }" />
 
 </Component>

@@ -4,8 +4,9 @@
   
       <H1>Recent HackerNews stories</H1>
   
-      <Items data="{$props.data}">
+        <Items data="{$props.data}">
         <Text>
+          <Link to="{ 'https://news.ycombinator.com/?id=' + $item.id}" target="_blank">{$item.id}</Link>
           { $item.title }
           by {$item.by} at {$item.time.slice(0, 10)}
           score: {$item.score} {$item.descendants ? 'comments: ' + $item.descendants : ''} 
