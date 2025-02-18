@@ -38,6 +38,6 @@
     </Footer>
 
     <DataSource id="recent" url="http://hn.jonudell.info:8081/query" method="POST"
-    body='{{"sql":"select * from hn where url is not null order by score desc limit 2 "}}' />
+    body='{{"sql":"select * from hn where url is not null order by score desc limit 50 "}}' />
 
 </App>
