@@ -1,15 +1,19 @@
 <App logo="resources/xmlui-logo.svg">
 
     <NavPanel>
-        <NavLink label="Recent (cards)" to="/" />
+        <NavLink label="Recent (markdown table)" to="/" />
+        <NavLink label="Recent (cards)" to="/recentCards" />
         <NavLink label="Recent (texts)" to="/recentTexts" />
         <NavLink label="Recent (table)" to="/recentTable" />
         <NavLink label="Recent (markdown text)" to="/recentMarkdownText" />
-        <NavLink label="Recent (markdown table)" to="/recentMarkdownTable" />
         <NavLink label="Mentions" to="/mentions" />
     </NavPanel>
     <Pages>
         <Page url="/">
+            <InfoCards />
+            <HackerNewsRecentMarkdownTable data="{recent}" />
+        </Page>
+        <Page url="/recentCards">
             <InfoCards />
             <HackerNewsRecentListOfCard data="{recent}" />
         </Page>
@@ -24,10 +28,6 @@
         <Page url="/recentMarkdownText">
             <InfoCards />
             <HackerNewsRecentMarkdownText data="{recent}" />
-        </Page>
-        <Page url="/recentMarkdownTable">
-            <InfoCards />
-            <HackerNewsRecentMarkdownTable data="{recent}" />
         </Page>
         <Page url="/mentions">
             <MentionsPage />
