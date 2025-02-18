@@ -1,0 +1,17 @@
+<Component name="HackerNewsRecentMarkdownTable">
+
+  <H1>Recent HackerNews stories</H1>
+
+  <Markdown content="{
+    '| ID | Title | By | Score | Comments | Url |\n|---|---|---|---|---|--|\n'
+    + $props.data.map( i => '|[' + i.id + '](https://news.ycombinator.com/i?id=' + i.id + ')|*' + i.title + '*|' + i.by + '|' + i.score + '|' + i.descendants + '|' + i.url + '|\n' ).join('')
+   }" />
+
+</Component>
+
+<!--
+  <Markdown content="{
+    '| ID | Title | By| Score | Comments\n|---|---|---|---|---|\n'
+    + $props.data.map( i => '|[' + i.id + '](https://news.ycombinator.com/i?id=' + i.id + ')|*' + i.title + '*|by ' + i.by + '|score '| + i.score + '|comments' + i.descendants + '|\n' ).join('')
+   }" />
+-->

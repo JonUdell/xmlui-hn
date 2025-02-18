@@ -1,0 +1,17 @@
+<Component name="MentionsPage">
+
+    <FlowLayout>
+
+        <HStack>
+            <MentionsChart  title="Companies: last 7 days" sql='{window.sql.companymentions7}' />
+            <MentionsChart title="Companies: last 30 days" sql='{window.sql.companymentions30}' />
+        </HStack>
+    
+        <HStack>
+            <MentionsChart title="Languages: last 7 days" sql='{window.sql.languagementions7}' />
+            <MentionsChart title="Languages: last 30 days" sql='{window.sql.languagementions30}' />
+        </HStack>
+
+    </FlowLayout>
+
+</Component>
