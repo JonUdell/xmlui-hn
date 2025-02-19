@@ -7,6 +7,7 @@
     <script src="xmlui/0.7.23.js"></script>
     <script src="xmlui/xmlui-charts.js"></script>
     <script>
+        window.xmluiHost = 'http://hn.jonudell.info/xmlui-hn'
         window.recent = function(limit) {
             const query = "select id, replace(substr(time,0,11),'-','/') as time, title, by, score, descendants, url from hn where url is not null order by score desc limit __LIMIT__ "
             return query.replace('__LIMIT__', limit)

@@ -40,6 +40,6 @@
         Powered by XMLUI
     </Footer>
 
-    <DataSource id="recent" url="http://hn.jonudell.info/xmlui-hn/query" method="POST" body='{window.sql.recent50}' />
+    <DataSource id="recent" url="{ window.xmluiHost + '/query' } " method="POST" body='{window.sql.recent50}' />
 
 </App>

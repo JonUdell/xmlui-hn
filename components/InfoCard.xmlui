@@ -1,6 +1,6 @@
 <Component name="InfoCard">
-
-    <DataSource id="data" url="http://hn.jonudell.info:8081/query" body='{ $props.sql }' method="POST" />
+    
+    <DataSource id="data" url="{ window.xmluiHost + '/query' }" body='{ $props.sql }' method="POST" />
 
     <Card width="12%" gap="0" title="{$props.title}">
         <Items data="{data}">
