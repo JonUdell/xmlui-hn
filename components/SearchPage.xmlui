@@ -1,0 +1,18 @@
+<Component name="SearchPage">
+
+    <VStack>
+
+        <Form width="30em"
+
+            onSubmit="(input) => search(input)">
+
+            <FormItem label="search for" type="text" />
+
+        </Form>
+
+        <SearchCard term="{ window.searchTerm() }" />      
+
+    </VStack>
+
+
+</Component>

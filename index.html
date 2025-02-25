@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -19,7 +19,7 @@
         };
         window.search = function(term, limit) {
             const query = "select id, replace(substr(time,0,11),'-','/') as time, title, by, score, descendants, url from hn where url is not null and title like '%__TERM__%' order by score desc limit __LIMIT__ "
-            return query.replace('__TERM__', term).replace('__LIMIT__', limit)
+            return {"sql":"select * from hn limit 10"}
         }
         window.mentionNames = {
             "company" : "apple,google,microsoft,spacex,tesla,facebook,",
@@ -37,7 +37,7 @@
             "companymentions30": { "sql": window.mentions(window.mentionNames.company , 30) },
             "languagementions7": { "sql": window.mentions(window.mentionNames.language ,7) },
             "languagementions30": { "sql": window.mentions(window.mentionNames.language ,30) },
-            "recent50": { "sql": window.recent(50)}
+            "recent50": { "sql": window.recent(50)},
         }
     </script>
 </head>
