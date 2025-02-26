@@ -24,7 +24,6 @@
         function setSearchTerm(term) {
             window.searchTerm = term;
         }
-        window.setSearchTerm = setSearchTerm;
         window.mentionNames = {
             "company": "apple,google,microsoft,spacex,tesla,facebook,",
             "language": "javascript,rust,html,python,typescript,sql,css,"
@@ -43,6 +42,7 @@
             "languagementions30": { "sql": window.mentions(window.mentionNames.language, 30) },
             "recent50": { "sql": window.recent(50) },
         }
+        window.setSearchTerm('rust')
     </script>
 </head>
 

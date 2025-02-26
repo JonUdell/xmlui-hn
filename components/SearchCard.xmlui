@@ -9,8 +9,6 @@
     </Text>
 
     
-
-    
     <DataSource id="data" url="{ window.xmluiHost + '/query' }" 
       rawBody="{ window.search($props.term,10) }" method="POST" />
 
@@ -24,11 +22,5 @@
         <Column canSort="true" bindTo="descendants"  header="comments" />
       </Table>
 
-
-    <Card gap="0" title="{$props.title}">
-        <Items data="{data}">
-            <Text>{$item.title}</Text>
-        </Items>
-    </Card>
 
 </Component>
