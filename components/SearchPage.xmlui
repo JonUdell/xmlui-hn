@@ -1,0 +1,39 @@
+<!--
+
+in this case i can init searchTerm to 'rust',
+the table fills with rust titles
+when i input python, console.log shows thqt 
+searchTerm is now python but the table
+stil fills with rust titles
+-->
+
+<Component  name="SearchPage">
+    <VStack>
+        <Form width="30em"
+            onSubmit="(input) => window.setSearchTerm(input['']) " >
+            <FormItem label="search for" type="text" />
+        </Form>
+        <SearchCard term="{window.searchTerm}" />  
+    </VStack>
+</Component>
+
+
+<!--
+
+in this case the table fills with rust titles,
+but when i enter python the error is
+
+Reflect.ownKeys called on non-object
+
+
+<Component var.searchTerm = "rust"  name="SearchPage">
+    <VStack>
+        <Form width="30em"
+            onSubmit="(input) => ( searchTerm = input['']) " >
+            <FormItem label="search for" type="text" />
+        </Form>
+        <SearchCard term="{searchTerm}" />  
+    </VStack>
+</Component>
+
+-->

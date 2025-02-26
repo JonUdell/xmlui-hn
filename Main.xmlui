@@ -1,4 +1,4 @@
-<App logo="resources/xmlui-logo.svg">
+<App layout="vertical" logo="resources/xmlui-logo.svg">
 
     <NavPanel>
         <NavLink label="Recent (table)" to="/" />
@@ -7,6 +7,7 @@
         <NavLink label="Recent (texts)" to="/recentTexts" />
         <NavLink label="Recent (markdown text)" to="/recentMarkdownText" />
         <NavLink label="Mentions" to="/mentions" />
+        <NavLink label="Search" to="/search" />
     </NavPanel>
     <Pages>
         <Page url="/">
@@ -31,6 +32,9 @@
         </Page>
         <Page url="/mentions">
             <MentionsPage />
+        </Page>
+        <Page url="/search">
+            <SearchPage />
         </Page>
     </Pages>
 

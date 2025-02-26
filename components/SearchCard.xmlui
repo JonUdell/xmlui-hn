@@ -1,0 +1,26 @@
+<Component name="SearchCard">
+
+    <Text>
+        { window.search($props.term,10) }
+    </Text>
+
+    <Text>
+        { typeof(window.search($props.term,10)) }
+    </Text>
+
+    
+    <DataSource id="data" url="{ window.xmluiHost + '/query' }" 
+      rawBody="{ window.search($props.term,10) }" method="POST" />
+
+          <Table data="{data}">
+        <Column canSort="true" bindTo="id" />
+        <Column canSort="true" bindTo="title"        width="4*" />
+        <Column canSort="true" bindTo="by"           width="2*" />
+        <Column canSort="true" bindTo="time" />
+        <Column canSort="true" bindTo="url"          width="3*" />
+        <Column canSort="true" bindTo="score" />
+        <Column canSort="true" bindTo="descendants"  header="comments" />
+      </Table>
+
+
+</Component>

@@ -1,3 +1,0 @@
-function sql() {
-   return '{ {"sql": "WITH RECURSIVE names(name, remaining) AS ( SELECT &apos;&apos;, &apos;amazon,microsoft,apple,google,tesla,spacex,openai,&apos; UNION ALL SELECT substr(remaining, 1, instr(remaining, &apos;,&apos;) - 1), substr(remaining, instr(remaining, &apos;,&apos;) + 1) FROM names WHERE remaining != &apos;&apos; ), counts AS ( SELECT name, ( SELECT COUNT(*) FROM hn WHERE LOWER(title) LIKE &apos;%&apos; || LOWER(names.name) || &apos;%&apos; AND (julianday(&apos;now&apos;) - julianday(datetime(substr(time, 1, 19)))) * 24 * 60 BETWEEN 0 AND 7*1440 AND time IS NOT NULL ) AS mentions FROM names WHERE name != &apos;&apos; ) SELECT name, mentions FROM counts WHERE mentions > 0 ORDER BY mentions DESC;" } }'    
-}   

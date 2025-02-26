@@ -2,7 +2,7 @@
 
   <H1>Recent HackerNews stories</H1>
 
-  <Markdown style="text-align:left" content="{
+  <Markdown content="{
     '| ID | Title | By | Time | Score | Comments | Url |\n|---|---|---|---|---|--|--|\n'
     + $props.data.map( i => '|[' + i.id + '](https://news.ycombinator.com/item?id=' + i.id + ')|*' + i.title + '*|' + i.by + '|' + i.time + '|' + i.score + '|' + i.descendants + '|' + i.url + '|\n' ).join('')
    }" />
