@@ -17,12 +17,31 @@
 
             return query
         };
-        window.search = function (term, limit) {
-            const query = "select id, replace(substr(time,0,11),'-','/') as time, title, by, score, descendants, url from hn where url is not null and title like '%__TERM__%' order by score desc limit __LIMIT__ "
-            return JSON.stringify({ "sql": "select * from hn where title like '%" + term + "%' limit 10" })
-        }
-        function setSearchTerm(term) {
-            window.searchTerm = term;
+        window.search = function (term, option) {
+            // console.log({ term, option });
+
+            // Default to empty string if term is undefined
+            if (term === undefined) {
+                term = "";
+            }
+
+            let whereClause = "";
+
+            // Check if a term is provided (not empty)
+            if (term !== "") {
+                // Check what option is selected
+                if (option === "undefined" || option === "all") {
+                    // Search in all fields (you might want to specify which fields)
+                    whereClause = "where title like '%" + term + "%' OR url like '%" + term + "%'";
+                } else {
+                    // Search in the specific field based on option
+                    whereClause = "where " + option + " like '%" + term + "%'";
+                }
+            }
+
+            const query = JSON.stringify({ "sql": "select * from hn " + whereClause + " order by time desc" });
+            // console.log({ whereClause, query });
+            return query;
         }
         window.mentionNames = {
             "company": "apple,google,microsoft,spacex,tesla,facebook,",
@@ -42,7 +61,6 @@
             "languagementions30": { "sql": window.mentions(window.mentionNames.language, 30) },
             "recent50": { "sql": window.recent(50) },
         }
-        window.setSearchTerm('rust')
     </script>
 </head>
 

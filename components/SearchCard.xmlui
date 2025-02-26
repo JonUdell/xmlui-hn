@@ -2,9 +2,10 @@
 
    
     <DataSource id="data" url="{ window.xmluiHost + '/query' }" 
-      rawBody="{ window.search($props.term,10) }" method="POST" />
+      rawBody="{ window.search($props.term,$props.option) }" method="POST" />
 
-          <Table data="{data}">
+
+    <Table data="{data}">
         <Column canSort="true" bindTo="id" />
         <Column canSort="true" bindTo="title"        width="4*" />
         <Column canSort="true" bindTo="by"           width="2*" />
@@ -12,7 +13,7 @@
         <Column canSort="true" bindTo="url"          width="3*" />
         <Column canSort="true" bindTo="score" />
         <Column canSort="true" bindTo="descendants"  header="comments" />
-      </Table>
+    </Table>
 
 
 </Component>

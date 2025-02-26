@@ -1,4 +1,4 @@
-<App layout="vertical" logo="resources/xmlui-logo.svg">
+<App logo="resources/xmlui-logo.svg">
 
     <NavPanel>
         <NavLink label="Recent (table)" to="/" />

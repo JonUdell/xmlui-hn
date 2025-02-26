@@ -1,14 +1,27 @@
 <Component  name="SearchPage">
+
+
     <VStack>
-        <HStack valign="middle">
-          <Text>
-          search for:
-          </Text>
-          <TextBox id="data" width="20em" />
+        <HStack verticalAlignment="center">
+            <Text>
+            search for:
+            </Text> 
+            <TextBox id="data" width="20em"/>
+            <RadioGroup id="options" initialValue="all">
+                <HStack>
+                    <Option label="all" value="all"/>
+                    <Option label="title" value="title"/>
+                    <Option label="url" value="url"/>
+                    <Option label="author" value="author"/>
+                </HStack>
+            </RadioGroup>
         </HStack>
-        <SearchCard term="{data.value}" />
+        <SearchCard term="{data.value}" option="{options.value}"/>
     </VStack>
+
 </Component>
+
+
 
 
 <!--
@@ -45,5 +58,7 @@ Reflect.ownKeys called on non-object
         <SearchCard term="{searchTerm}" />  
     </VStack>
 </Component>
+
+https://xmlui-docs.azurewebsites.net/howto/layout/#setting-vertical-alignment
 
 -->
