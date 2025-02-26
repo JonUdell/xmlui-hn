@@ -4,13 +4,13 @@
 
         <Form width="30em"
 
-            onSubmit="(input) => search(input)">
+            onSubmit="(input) => window.setSearchTerm(input[''])">
 
             <FormItem label="search for" type="text" />
 
         </Form>
 
-        <SearchCard term="python" />      
+        <SearchCard term="{window.searchTerm}" />  
 
     </VStack>
 
