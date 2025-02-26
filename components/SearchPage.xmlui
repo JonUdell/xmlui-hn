@@ -10,7 +10,7 @@
 
         </Form>
 
-        <SearchCard term="{ window.searchTerm() }" />      
+        <SearchCard term="python" />      
 
     </VStack>
 
