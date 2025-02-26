@@ -8,12 +8,12 @@ stil fills with rust titles
 -->
 
 <Component  name="SearchPage">
-    <VStack>
-        <Form width="30em"
-            onSubmit="(input) => window.setSearchTerm(input['']) " >
-            <FormItem label="search for" type="text" />
+    <VStack var.term="''">
+        <Form width="30em" data="{{term: 'rust'}}"
+            onSubmit="(input) => {term = input.term; window.setSearchTerm(term) } " >
+            <FormItem label="search for" type="text" bindTo="term" />
         </Form>
-        <SearchCard term="{window.searchTerm}" />  
+        <SearchCard term="{term}" />  
     </VStack>
 </Component>
 

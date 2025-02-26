@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="xmlui/0.7.25.js"></script>
+    <script src="xmlui/xmlui-standalone.umd.js"></script>
     <script src="xmlui/xmlui-charts.js"></script>
     <script>
         window.xmluiHost = 'http://hn.jonudell.info/xmlui-hn'
@@ -19,9 +19,13 @@
         };
         window.search = function (term, limit) {
             const query = "select id, replace(substr(time,0,11),'-','/') as time, title, by, score, descendants, url from hn where url is not null and title like '%__TERM__%' order by score desc limit __LIMIT__ "
-            return JSON.stringify({ "sql": "select * from hn where title like '%" + term + "%' limit 10" })
+            const obj = { "sql": "select * from hn where title like '%" + term + "%' limit 10" }
+            const result = JSON.stringify(obj)
+            console.log('search', obj, result);
+            return result;
         }
         function setSearchTerm(term) {
+            console.log('setSearchTerm', term)
             window.searchTerm = term;
         }
         window.mentionNames = {
