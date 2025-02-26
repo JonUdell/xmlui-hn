@@ -1,14 +1,6 @@
 <Component name="SearchCard">
 
-    <Text>
-        { window.search($props.term,10) }
-    </Text>
-
-    <Text>
-        { typeof(window.search($props.term,10)) }
-    </Text>
-
-    
+   
     <DataSource id="data" url="{ window.xmluiHost + '/query' }" 
       rawBody="{ window.search($props.term,10) }" method="POST" />
 
