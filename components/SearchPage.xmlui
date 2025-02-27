@@ -5,7 +5,7 @@
         <HStack verticalAlignment="center">
             <Text>
             search for:
-            </Text> 
+            </Text>
             <TextBox id="data" width="20em"/>
             <RadioGroup id="options" initialValue="all">
                 <HStack>
@@ -38,7 +38,7 @@ still fills with rust titles
             onSubmit="(input) => window.setSearchTerm(input['']) " >
             <FormItem label="search for" type="text" />
         </Form>
-        <SearchCard term="{window.searchTerm}" />  
+        <SearchCard term="{window.searchTerm}" />
     </VStack>
 </Component>
 
@@ -55,7 +55,7 @@ Reflect.ownKeys called on non-object
             onSubmit="(input) => ( searchTerm = input['']) " >
             <FormItem label="search for" type="text" />
         </Form>
-        <SearchCard term="{searchTerm}" />  
+        <SearchCard term="{searchTerm}" />
     </VStack>
 </Component>
 

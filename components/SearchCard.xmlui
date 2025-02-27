@@ -14,8 +14,7 @@
         <Column canSort="true" bindTo="score" />
         <Column canSort="true" bindTo="descendants"  header="comments" />
         <Column header = "fave">
-          <Button label="{$item.fave}"
-          >
+          <Button label="{$item.fave}">
             <event name="click">
               <APICall
                 method="post"
@@ -25,8 +24,29 @@
             </event>
           </Button>
         </Column>
+        <Column header = "fave2">
+          <Checkbox initialValue="{$item.fave}">
+            <event name="click">
+              <APICall
+                method="post"
+                url="{ window.xmluiHost + '/query' }"
+                body="{ window.favorite($item.id, $item.fave ? 0 : 1) }"
+                />
+            </event>
+          </Checkbox>
+        </Column>
+        <Column header = "fave3">
+          <Checkbox initialValue="{$item.fave}">
+            <event name="didChange">
+              <APICall
+                method="post"
+                url="{ window.xmluiHost + '/query' }"
+                body="{ window.favorite($item.id, $item.fave ? 0 : 1) }"
+                />
+            </event>
+          </Checkbox>
+        </Column>
 
     </Table>
-
 
 </Component>
