@@ -48,8 +48,9 @@
             return query;
         }
         window.mentionNames = {
-            "company": "apple,google,microsoft,spacex,tesla,facebook,",
-            "language": "javascript,rust,html,python,typescript,sql,css,"
+            "company": "amazon,amd,apple,cloudflare,facebook,ibm,intel,mozilla,netflix,openai,tesla,tiktok,toshiba,twitter,sony,spacex,stripe,uber,zendesk",
+            "language": "c#,clojure,css,erlang,golang,haskell,html,javascript,json,php,python,rust,sql,swift,typescript,webassembly,wasm,xml",
+            "db": "clickhouse,citus,couchdb,db2,duckdb,mongodb,mysql,oracle,postgres,redis,sql server,timescale,sqlite,supabase,steampipe,yugabyte"
         }
         window.sql = {
             "stories": { "sql": "select count(*) as value from hn" },
@@ -61,8 +62,13 @@
             "maxscore": { "sql": "select max(score) as value from hn" },
             "companymentions7": { "sql": window.mentions(window.mentionNames.company, 7) },
             "companymentions30": { "sql": window.mentions(window.mentionNames.company, 30) },
+            "companymentions90": { "sql": window.mentions(window.mentionNames.company, 90) },
             "languagementions7": { "sql": window.mentions(window.mentionNames.language, 7) },
             "languagementions30": { "sql": window.mentions(window.mentionNames.language, 30) },
+            "languagementions90": { "sql": window.mentions(window.mentionNames.language, 90) },
+            "dbmentions7": { "sql": window.mentions(window.mentionNames.db, 7) },
+            "dbmentions30": { "sql": window.mentions(window.mentionNames.db, 30) },
+            "dbmentions90": { "sql": window.mentions(window.mentionNames.db, 90) },
             "recent50": { "sql": window.recent(50) },
             "recent1000": { "sql": window.recent(1000) },
         }
