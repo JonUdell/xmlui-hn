@@ -1,49 +1,48 @@
-<App logo="resources/xmlui-logo.svg">
+    <App logo="resources/xmlui-logo.svg">
 
-    <NavPanel>
-        <NavLink label="Recent (table)" to="/" />
-        <NavLink label="Recent (markdown table)" to="/recentMarkdownTable" />
-        <NavLink label="Recent (cards)" to="/recentCards" />
-        <NavLink label="Recent (texts)" to="/recentTexts" />
-        <NavLink label="Recent (markdown text)" to="/recentMarkdownText" />
-        <NavLink label="Mentions" to="/mentions" />
-        <NavLink label="Search" to="/search" />
-    </NavPanel>
-    <Pages>
-        <Page url="/">
-            <InfoCards />
-            <HackerNewsRecentTable data="{recent}" />
-        </Page>
-        <Page url="/recentMarkdownTable">
-            <InfoCards />
-            <HackerNewsRecentMarkdownTable data="{recent}" />
-        </Page>
-        <Page url="/recentCards">
-            <InfoCards />
-            <HackerNewsRecentListOfCard data="{recent}" />
-        </Page>
-        <Page url="/recentTexts">
-            <InfoCards />
-            <HackerNewsRecentListOfText data="{recent}" />
-        </Page>
-        <Page url="/recentMarkdownText">
-            <InfoCards />
-            <HackerNewsRecentMarkdownText data="{recent}" />
-        </Page>
-        <Page url="/mentions">
-            <MentionsPage />
-        </Page>
-        <Page url="/search">
-            <SearchPage />
-        </Page>
-    </Pages>
+        <NavPanel>
+            <NavLink label="Home" to="/" />
+            <!--
+            <NavLink label="Recent (markdown table)" to="/recentMarkdownTable" />
+            <NavLink label="Recent (cards)" to="/recentCards" />
+            <NavLink label="Recent (texts)" to="/recentTexts" />
+            <NavLink label="Recent (markdown text)" to="/recentMarkdownText" />
+            -->
+            <NavLink label="Posts" to="/search" />
+        </NavPanel>
+        <Pages>
+            <Page url="/">
+                <InfoCards />
+                <MentionsPage />
+            </Page>
+            <!--
+            <Page url="/recentMarkdownTable">
+                <InfoCards />
+                <HackerNewsRecentMarkdownTable data="{recent}" />
+            </Page>
+            <Page url="/recentCards">
+                <InfoCards />
+                <HackerNewsRecentListOfCard data="{recent}" />
+            </Page>
+            <Page url="/recentTexts">
+                <InfoCards />
+                <HackerNewsRecentListOfText data="{recent}" />
+            </Page>
+            <Page url="/recentMarkdownText">
+                <InfoCards />
+                <HackerNewsRecentMarkdownText data="{recent}" />
+            </Page>
+            -->
+            <Page url="/search">
+                <SearchPage />
+            </Page>
+        </Pages>
 
 
+        <Footer>
+            Powered by XMLUI
+        </Footer>
 
-    <Footer>
-        Powered by XMLUI
-    </Footer>
+        <DataSource id="recent" url="{ window.xmluiHost + '/query' } " method="POST" body='{window.sql.recent1000}' />
 
-    <DataSource id="recent" url="{ window.xmluiHost + '/query' } " method="POST" body='{window.sql.recent1000}' />
-
-</App>
+    </App>
