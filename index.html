@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="xmlui/0.7.27.js"></script>
+    <script src="xmlui/0.7.29.js"></script>
     <script src="xmlui/xmlui-charts.js"></script>
     <script>
         window.xmluiHost = 'http://hn.jonudell.info/xmlui-hn'
         window.recent = function (limit) {
-            const query = "select id, replace(substr(time,0,11),'-','/') as time, title, by, score, cast(descendants as integer) as descendants, url from hn where url is not null order by score desc limit __LIMIT__ "
+            const query = "select id, replace(substr(time,0,11),'-','/') as time, title, by, score, cast(descendants as integer) as descendants, url from hn where url is not null order by time desc limit __LIMIT__ "
             return query.replace('__LIMIT__', limit)
         }
         window.mentions = function (names, days) {
@@ -64,6 +64,7 @@
             "languagementions7": { "sql": window.mentions(window.mentionNames.language, 7) },
             "languagementions30": { "sql": window.mentions(window.mentionNames.language, 30) },
             "recent50": { "sql": window.recent(50) },
+            "recent1000": { "sql": window.recent(1000) },
         }
     </script>
 </head>

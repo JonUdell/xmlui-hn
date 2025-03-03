@@ -6,7 +6,11 @@
 
 
     <Table data="{data}">
-        <Column canSort="true" bindTo="id" />
+        <Column canSort="true" bindTo="id">
+          <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
+           { $item.id }
+          </Link>
+        </Column>
         <Column canSort="true" bindTo="title"        width="4*" />
         <Column canSort="true" bindTo="by"           width="2*" />
         <Column canSort="true" bindTo="time" />

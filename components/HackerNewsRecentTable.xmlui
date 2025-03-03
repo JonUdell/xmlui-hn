@@ -1,13 +1,13 @@
 <Component name="HackerNewsRecentTable">
 
     <VStack>
-  
+
       <H1>Recent HackerNews stories</H1>
-  
-      <Table data="{$props.data}">
+
+      <Table rowsSelectable="true" data="{$props.data}">
         <Column canSort="true" bindTo="id">
-          <Link to="{'https://news.ycombinator.com/item?id=' + $props.data[0].id}" target="_blank">
-           { $props.data[0].id }
+          <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
+           { $item.id }
           </Link>
         </Column>
         <Column canSort="true" bindTo="title"        width="4*" />
@@ -18,7 +18,7 @@
         <Column canSort="true" bindTo="descendants"  header="comments" />
       </Table>
 
-  
+
     </VStack>
-  
+
   </Component>
