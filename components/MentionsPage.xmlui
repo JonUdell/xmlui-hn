@@ -5,11 +5,19 @@
         <HStack>
             <MentionsChart  title="Companies: last 7 days" sql='{window.sql.companymentions7}' />
             <MentionsChart title="Companies: last 30 days" sql='{window.sql.companymentions30}' />
+            <MentionsChart title="Companies: last 90 days" sql='{window.sql.companymentions90}' />
         </HStack>
-    
+
         <HStack>
             <MentionsChart title="Languages: last 7 days" sql='{window.sql.languagementions7}' />
             <MentionsChart title="Languages: last 30 days" sql='{window.sql.languagementions30}' />
+            <MentionsChart title="Languages: last 90 days" sql='{window.sql.languagementions90}' />
+        </HStack>
+
+        <HStack>
+            <MentionsChart title="Databases: last 7 days"  sql='{window.sql.dbmentions7}' />
+            <MentionsChart title="Databases: last 30 days" sql='{window.sql.dbmentions30}' />
+            <MentionsChart title="Databases: last 90 days" sql='{window.sql.dbmentions90}' />
         </HStack>
 
     </FlowLayout>
