@@ -8,8 +8,6 @@
             <MentionsChart title="Companies: last 90 days" sql='{window.sql.companymentions90}' />
         </HStack>
 
-        <!--
-
         <HStack>
             <MentionsChart title="Languages: last 7 days" sql='{window.sql.languagementions7}' />
             <MentionsChart title="Languages: last 30 days" sql='{window.sql.languagementions30}' />
@@ -21,8 +19,7 @@
             <MentionsChart title="Databases: last 30 days" sql='{window.sql.dbmentions30}' />
             <MentionsChart title="Databases: last 90 days" sql='{window.sql.dbmentions90}' />
         </HStack>
-        -->
-
+        
     </FlowLayout>
 
 </Component>
