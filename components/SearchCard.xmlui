@@ -11,34 +11,17 @@
            { $item.id }
           </Link>
         </Column>
-        <Column canSort="true" bindTo="title"        width="4*" />
-        <Column canSort="true" bindTo="by"           width="2*" />
+        <Column canSort="true" bindTo="title"    width="4*" />
+        <Column canSort="true" bindTo="by"       width="2*" />
         <Column canSort="true" bindTo="time" />
-        <Column canSort="true" bindTo="url"          width="3*" />
+
+        <Column canSort="true" bindTo="url"      width="3*" >
+          <Link to="{$item.url}"  target="_blank">
+           { $item.url }
+          </Link>
+        </Column>
+
         <Column canSort="true" bindTo="score" />
-        <Column canSort="true" bindTo="descendants"  header="comments" />
-        <Column header = "fave">
-          <Button label="{$item.fave}">
-            <event name="click">
-              <APICall
-                method="post"
-                url="{ window.xmluiHost + '/query' }"
-                body="{ window.favorite($item.id, $item.fave ? 0 : 1) }"
-                />
-            </event>
-          </Button>
-        </Column>
-        <Column header = "fave2">
-          <Checkbox initialValue="{$item.fave}">
-            <event name="click">
-              <APICall
-                method="post"
-                url="{ window.xmluiHost + '/query' }"
-                body="{ window.favorite($item.id, $item.fave ? 0 : 1) }"
-                />
-            </event>
-          </Checkbox>
-        </Column>
         <Column header = "fave3">
           <Checkbox initialValue="{$item.fave}">
             <event name="didChange">
