@@ -43,6 +43,4 @@
             Powered by XMLUI
         </Footer>
 
-        <DataSource id="recent" url="{ window.xmluiHost + '/query' } " method="POST" body='{window.sql.recent1000}' />
-
     </App>
