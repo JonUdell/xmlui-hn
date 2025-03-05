@@ -9,7 +9,7 @@
     <script>
         window.xmluiHost = 'http://hn.jonudell.info/xmlui-hn'
         window.recent = function (limit) {
-            const query = "select id, replace(substr(time,0,11),'-','/') as time, title, by, score, cast(descendants as integer) as descendants, url from hn where url is not null order by time desc limit __LIMIT__ "
+            const query = "select id, replace(substr(time,0,11),'-','/') as time, title, by, score, cast(descendants as integer) as descendants, url, fave from hn where url is not null order by time desc limit __LIMIT__ "
             return query.replace('__LIMIT__', limit)
         }
 

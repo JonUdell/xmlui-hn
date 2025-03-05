@@ -15,20 +15,23 @@
         <Column canSort="true" bindTo="by"       width="2*" />
         <Column canSort="true" bindTo="time" />
 
+        <Column canSort="true" bindTo="score" />
+
+        <Column canSort="true" bindTo="descendants" header="comments" />
+
         <Column canSort="true" bindTo="url"      width="3*" >
           <Link to="{$item.url}"  target="_blank">
            { $item.url }
           </Link>
         </Column>
 
-        <Column canSort="true" bindTo="score" />
-        <Column header = "fave3">
-          <Checkbox initialValue="{$item.fave}">
+        <Column header = "fave">
+          <Checkbox initialValue="{$item.fave == 1}">
             <event name="didChange">
               <APICall
                 method="post"
                 url="{ window.xmluiHost + '/query' }"
-                body="{ window.favorite($item.id, $item.fave ? 0 : 1) }"
+                body="{ window.favorite($item.id, $item.fave === 1 ? 0 : 1) }"
                 />
             </event>
           </Checkbox>
