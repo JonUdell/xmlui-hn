@@ -12,7 +12,7 @@
                     <Option label="all" value="all"/>
                     <Option label="title" value="title"/>
                     <Option label="url" value="url"/>
-                    <Option label="author" value="author"/>
+                    <Option label="by" value="by"/>
                 </HStack>
             </RadioGroup>
         </HStack>

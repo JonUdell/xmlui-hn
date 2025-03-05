@@ -12,12 +12,35 @@
             const query = "select id, replace(substr(time,0,11),'-','/') as time, title, by, score, cast(descendants as integer) as descendants, url from hn where url is not null order by time desc limit __LIMIT__ "
             return query.replace('__LIMIT__', limit)
         }
-        window.mentions = function (names, days) {
-            const query = "WITH RECURSIVE names(name, remaining) AS ( SELECT '', '__NAMES__' UNION ALL SELECT substr(remaining, 1, instr(remaining, ',') - 1), substr(remaining, instr(remaining, ',') + 1) FROM names WHERE remaining != '' ), counts AS ( SELECT name, ( SELECT COUNT(*) FROM hn WHERE LOWER(title) LIKE '%' || LOWER(names.name) || '%' AND (julianday('now') - julianday(datetime(substr(time, 1, 19)))) * 24 * 60 BETWEEN 0 AND __DAYS__ *1440 AND time IS NOT NULL ) AS mentions FROM names WHERE name != '' ) SELECT name, mentions FROM counts WHERE mentions > 0 ORDER BY mentions DESC;".replace('__NAMES__', names).replace('__DAYS__', days)
 
-            return query
+        window.mentions = function (names, days) {
+            const jsonNames = JSON.stringify(names.split(",").map(n => n.trim())); // Ensure valid JSON array
+
+            const query = `
+        WITH names AS (
+            SELECT value AS name FROM json_each('${jsonNames}')
+        ),
+        counts AS (
+            SELECT
+                names.name,
+                COUNT(*) AS mentions
+            FROM hn
+            JOIN names ON LOWER(hn.title) LIKE '%' || LOWER(names.name) || '%'
+            WHERE
+                time >= datetime('now', '-${days} days')
+            GROUP BY names.name
+        )
+        SELECT name, mentions
+        FROM counts
+        WHERE mentions > 0 and name != ''
+        ORDER BY mentions DESC;
+    `;
+
+            return query;
         };
-        window.favorite = function(id, fave) {
+
+
+        window.favorite = function (id, fave) {
             const query = "update hn set fave = " + fave + " where id = " + id
             return { "sql": query }
         }
