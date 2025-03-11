@@ -1,42 +1,46 @@
 <Component name="SearchCard">
 
+  <DataSource id="data" url="{ window.xmluiHost + '/query' }"
+    rawBody="{ window.search($props.term,$props.option) }" method="POST" />
 
-    <DataSource id="data" url="{ window.xmluiHost + '/query' }"
-      rawBody="{ window.search($props.term,$props.option) }" method="POST" />
+  <Slider id="slider" maxValue="10" step="1" initialValue="{[0, 10]}" label="Range">
+    <event name="didChange">
+      { console.log('changed', JSON.stringify($item)) }
+    </event>
+  </Slider>
 
+  <Table data="{data}">
+    <Column canSort="true" bindTo="id">
+      <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
+        { $item.id }
+      </Link>
+    </Column>
+    <Column canSort="true" bindTo="title" width="4" />
+    <Column canSort="true" bindTo="by" width="2" />
+    <Column canSort="true" bindTo="time" />
 
-    <Table data="{data}">
-        <Column canSort="true" bindTo="id">
-          <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
-           { $item.id }
-          </Link>
-        </Column>
-        <Column canSort="true" bindTo="title"    width="4*" />
-        <Column canSort="true" bindTo="by"       width="2*" />
-        <Column canSort="true" bindTo="time" />
+    <Column canSort="true" bindTo="score" />
 
-        <Column canSort="true" bindTo="score" />
+    <Column canSort="true" bindTo="descendants" header="comments" />
 
-        <Column canSort="true" bindTo="descendants" header="comments" />
+    <Column canSort="true" bindTo="url" width="3*">
+      <Link to="{$item.url}" target="_blank">
+        { $item.url }
+      </Link>
+    </Column>
 
-        <Column canSort="true" bindTo="url"      width="3*" >
-          <Link to="{$item.url}"  target="_blank">
-           { $item.url }
-          </Link>
-        </Column>
+    <Column header="fave">
+      <Checkbox initialValue="{$item.fave == 1}">
+        <event name="didChange">
+          <APICall
+            method="post"
+            url="{ window.xmluiHost + '/query' }"
+            body="{ window.favorite($item.id, $item.fave == 1 ? 0 : 1) }"
+          />
+        </event>
+      </Checkbox>
+    </Column>
 
-        <Column header = "fave">
-          <Checkbox initialValue="{$item.fave == 1}">
-            <event name="didChange">
-              <APICall
-                method="post"
-                url="{ window.xmluiHost + '/query' }"
-                body="{ window.favorite($item.id, $item.fave === 1 ? 0 : 1) }"
-                />
-            </event>
-          </Checkbox>
-        </Column>
-
-    </Table>
+  </Table>
 
 </Component>

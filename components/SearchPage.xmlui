@@ -1,6 +1,7 @@
 <Component  name="SearchPage">
 
 
+
     <VStack>
         <HStack verticalAlignment="center">
             <Text>
@@ -20,45 +21,3 @@
     </VStack>
 
 </Component>
-
-
-
-
-<!--
-
-in this case i init searchTerm to 'rust' in index.html
-the table fills with rust titles
-when i input python, console.log shows that
-searchTerm is now python but the table
-still fills with rust titles
-
-<Component  name="SearchPage">
-    <VStack>
-        <Form idwidth="30em"
-            onSubmit="(input) => window.setSearchTerm(input['']) " >
-            <FormItem label="search for" type="text" />
-        </Form>
-        <SearchCard term="{window.searchTerm}" />
-    </VStack>
-</Component>
-
-in this case a reactive var inits the search term,
-the table fills with rust titles,
-but when i enter python the error is
-
-Reflect.ownKeys called on non-object
-
-
-<Component var.searchTerm = "rust"  name="SearchPage">
-    <VStack>
-        <Form width="30em"
-            onSubmit="(input) => ( searchTerm = input['']) " >
-            <FormItem label="search for" type="text" />
-        </Form>
-        <SearchCard term="{searchTerm}" />
-    </VStack>
-</Component>
-
-https://xmlui-docs.azurewebsites.net/howto/layout/#setting-vertical-alignment
-
--->

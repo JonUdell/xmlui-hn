@@ -2,37 +2,13 @@
 
         <NavPanel>
             <NavLink label="Home" to="/" />
-            <!--
-            <NavLink label="Recent (markdown table)" to="/recentMarkdownTable" />
-            <NavLink label="Recent (cards)" to="/recentCards" />
-            <NavLink label="Recent (texts)" to="/recentTexts" />
-            <NavLink label="Recent (markdown text)" to="/recentMarkdownText" />
-            -->
             <NavLink label="Posts" to="/search" />
         </NavPanel>
         <Pages>
             <Page url="/">
                 <InfoCards />
                 <MentionsPage />
-            </Page>
-            <!--
-            <Page url="/recentMarkdownTable">
-                <InfoCards />
-                <HackerNewsRecentMarkdownTable data="{recent}" />
-            </Page>
-            <Page url="/recentCards">
-                <InfoCards />
-                <HackerNewsRecentListOfCard data="{recent}" />
-            </Page>
-            <Page url="/recentTexts">
-                <InfoCards />
-                <HackerNewsRecentListOfText data="{recent}" />
-            </Page>
-            <Page url="/recentMarkdownText">
-                <InfoCards />
-                <HackerNewsRecentMarkdownText data="{recent}" />
-            </Page>
-            -->
+            </Page>>
             <Page url="/search">
                 <SearchPage />
             </Page>

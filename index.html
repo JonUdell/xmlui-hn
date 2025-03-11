@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="xmlui/0.7.30.js"></script>
-    <script src="xmlui/xmlui-charts.js"></script>
+    <script src="xmlui/0.7.34.slider.js"></script>
+    <script src="xmlui/charts-0.1.7.js"></script>
     <script>
         window.xmluiHost = 'http://hn.jonudell.info/xmlui-hn'
 
@@ -49,7 +49,6 @@
             return { "sql": query }
         }
         window.search = function (term, option) {
-            console.log({ term, option });
 
             // Default to empty string if term is undefined
             if (term === undefined) {
