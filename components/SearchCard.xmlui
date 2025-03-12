@@ -1,18 +1,11 @@
-<Component name="SearchCard">
+<Component var.term="" var.option="all" name="SearchCard">
 
   <DataSource id="data" url="{ window.xmluiHost + '/query' }"
     rawBody="{ window.search($props.term,$props.option) }" method="POST" />
 
-  <!--
-    onDidChange="(newRange) => ( console.log(JSON.stringify(newRange)))"
+  <DataSource id="data2" url="{ window.xmluiHost + '/query' }"
+    rawBody="{ window.search(term, option) }" method="POST" />
 
-    onDidChange="{ console.log(JSON.stringify(slider.value)) }"
-    onDidChange="{ console.log(JSON.stringify(slider.value)) }"
-    onClick="{ slider.setValue([3,6]) }"
-      onClick="{ console.log( typeof( [ sliderRange.value[0], sliderRange.value[1]  ] )  )}"
-      onClick="{ slider.setValue ( [ sliderRange.value[0]+1, sliderRange.value[1]+1 ] )   }"
-
--->
   <Slider
     id="slider"
     maxValue="10"
@@ -31,7 +24,7 @@
 
     <Button
       label="updateSlider"
-      id="button"
+      id="button1"
       width="20%"
       onClick="{ slider.setValue ( [ sliderRange.value[0]+1, sliderRange.value[1]+1 ] )   }"
     />
@@ -39,15 +32,27 @@
     <Button
       data="{data}"
       label="queryTable"
-      id="button"
+      id="button2"
       width="20%"
       onClick="{ table.selectAll(); console.log(data), console.log(data.value); table.clearSelection();  }"
+    />
+
+    <Button
+      label="updateQuery"
+      id="button3"
+      width="20%"
+      onClick="{ term='willison'; option='all' }"
+    />
+
+    <ChangeListener
+      listenTo="term"
+      onDidChange="console.log('term changed')"
     />
 
 
   </HStack>
 
-  <Table id="table" data="{data}" rowsSelectable="true">
+  <Table id="table" data="{data2}" rowsSelectable="true">
     <Column canSort="true" bindTo="id">
       <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
         { $item.id }
