@@ -1,10 +1,13 @@
-<Component var.term="" var.option="all" name="SearchCard">
+<Component var.start="2025-01-01" var.end="2025-01-30" name="SearchCard">
 
+<!--
   <DataSource id="data" url="{ window.xmluiHost + '/query' }"
     rawBody="{ window.search($props.term,$props.option) }" method="POST" />
 
+-->
+
   <DataSource id="data2" url="{ window.xmluiHost + '/query' }"
-    rawBody="{ window.search(term, option) }" method="POST" />
+    rawBody="{ window.searchDays(start, end) }" method="POST" />
 
   <Slider
     id="slider"
@@ -16,6 +19,8 @@
   />
 
   <HStack>
+
+<!--
 
     <TextBox
       width="10%"
@@ -37,16 +42,18 @@
       onClick="{ table.selectAll(); console.log(data), console.log(data.value); table.clearSelection();  }"
     />
 
+-->
+
     <Button
       label="updateQuery"
       id="button3"
       width="20%"
-      onClick="{ term='willison'; option='all' }"
+      onClick="{ start='2025-03-01'; end='2025-03-05' }"
     />
 
     <ChangeListener
-      listenTo="term"
-      onDidChange="console.log('term changed')"
+      listenTo="start"
+      onDidChange="console.log('start changed')"
     />
 
 
