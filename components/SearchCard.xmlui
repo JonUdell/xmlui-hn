@@ -36,10 +36,18 @@
       onClick="{ slider.setValue ( [ sliderRange.value[0]+1, sliderRange.value[1]+1 ] )   }"
     />
 
+    <Button
+      data="{data}"
+      label="queryTable"
+      id="button"
+      width="20%"
+      onClick="{ table.selectAll(); console.log(data), console.log(data.value); table.clearSelection();  }"
+    />
+
 
   </HStack>
 
-  <Table data="{data}">
+  <Table id="table" data="{data}" rowsSelectable="true">
     <Column canSort="true" bindTo="id">
       <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
         { $item.id }
