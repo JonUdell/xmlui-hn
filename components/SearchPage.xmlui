@@ -1,21 +1,39 @@
-<Component  name="SearchPage">
+<Component name="SearchPage">
 
     <VStack>
         <HStack verticalAlignment="center">
             <Text>
-            search for:
+                search for:
             </Text>
-            <TextBox id="data" width="20em"/>
+            <TextBox id="data" width="20em" />
             <RadioGroup id="options" initialValue="all">
                 <HStack>
-                    <Option label="all" value="all"/>
-                    <Option label="title" value="title"/>
-                    <Option label="url" value="url"/>
-                    <Option label="by" value="by"/>
+                    <Option label="all" value="all" />
+                    <Option label="title" value="title" />
+                    <Option label="url" value="url" />
+                    <Option label="by" value="by" />
                 </HStack>
             </RadioGroup>
         </HStack>
-        <SearchCard term="{data.value}" option="{options.value}"/>
     </VStack>
+    <HStack>
+        <DatePicker
+            startText="start"
+            width="20%"
+            dateFormat="yyyy-MM-dd"
+            initialValue="{ window.startDate.replaceAll('-','\/') }"
+            onDidChange="(val) => start = val"
+        />
+
+        <DatePicker
+            startText="end"
+            width="20%"
+            dateFormat="yyyy-MM-dd"
+            initialValue="{ window.endDate.replaceAll('-','\/') }"
+            onDidChange="(val) => end = val"
+        />
+    </HStack>
+
+    <SearchDisplay term="{data.value}" option="{options.value}" />
 
 </Component>
