@@ -1,6 +1,9 @@
-<Component var.start="2025-01-01" var.end="2025-01-30" name="SearchCard">
+<Component
+  var.start="{ window.startDate }"
+  var.end="{ window.endDate }"
+  name="SearchCard">
 
-<!--
+  <!--
   <DataSource id="data" url="{ window.xmluiHost + '/query' }"
     rawBody="{ window.search($props.term,$props.option) }" method="POST" />
 
@@ -8,6 +11,10 @@
 
   <DataSource id="data2" url="{ window.xmluiHost + '/query' }"
     rawBody="{ window.searchDays(start, end) }" method="POST" />
+
+  <HStack>
+
+    <!--
 
   <Slider
     id="slider"
@@ -17,10 +24,6 @@
     label="Range"
     onDidChange="(newRange) => ( sliderRange.setValue(newRange) )"
   />
-
-  <HStack>
-
-<!--
 
     <TextBox
       width="10%"
@@ -39,7 +42,8 @@
       label="queryTable"
       id="button2"
       width="20%"
-      onClick="{ table.selectAll(); console.log(data), console.log(data.value); table.clearSelection();  }"
+      onClick="{ table.selectAll(); console.log(data), console.log(data.value); table.clearSelection();
+    }"
     />
 
 -->
@@ -50,6 +54,23 @@
       width="20%"
       onClick="{ start='2025-03-01'; end='2025-03-05' }"
     />
+
+    <DatePicker
+      startText="start"
+      width="20%"
+      dateFormat="yyyy-MM-dd"
+      initialValue="{ window.startDate.replaceAll('-','\/') }"
+      onDidChange="(val) => start = val"
+    />
+
+    <DatePicker
+      startText="end"
+      width="20%"
+      dateFormat="yyyy-MM-dd"
+      initialValue="{ window.endDate.replaceAll('-','\/') }"
+      onDidChange="(val) => end = val"
+    />
+
 
     <ChangeListener
       listenTo="start"
