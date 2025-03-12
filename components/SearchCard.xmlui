@@ -3,11 +3,41 @@
   <DataSource id="data" url="{ window.xmluiHost + '/query' }"
     rawBody="{ window.search($props.term,$props.option) }" method="POST" />
 
-  <Slider id="slider" maxValue="10" step="1" initialValue="{[0, 10]}" label="Range">
-    <event name="didChange">
-      { console.log('changed', JSON.stringify($item)) }
-    </event>
-  </Slider>
+  <!--
+    onDidChange="(newRange) => ( console.log(JSON.stringify(newRange)))"
+
+    onDidChange="{ console.log(JSON.stringify(slider.value)) }"
+    onDidChange="{ console.log(JSON.stringify(slider.value)) }"
+    onClick="{ slider.setValue([3,6]) }"
+      onClick="{ console.log( typeof( [ sliderRange.value[0], sliderRange.value[1]  ] )  )}"
+      onClick="{ slider.setValue ( [ sliderRange.value[0]+1, sliderRange.value[1]+1 ] )   }"
+
+-->
+  <Slider
+    id="slider"
+    maxValue="10"
+    step="1"
+    initialValue="{[0, 10]}"
+    label="Range"
+    onDidChange="(newRange) => ( sliderRange.setValue(newRange) )"
+  />
+
+  <HStack>
+
+    <TextBox
+      width="10%"
+      id="sliderRange"
+    />
+
+    <Button
+      label="updateSlider"
+      id="button"
+      width="20%"
+      onClick="{ slider.setValue ( [ sliderRange.value[0]+1, sliderRange.value[1]+1 ] )   }"
+    />
+
+
+  </HStack>
 
   <Table data="{data}">
     <Column canSort="true" bindTo="id">
@@ -35,7 +65,7 @@
           <APICall
             method="post"
             url="{ window.xmluiHost + '/query' }"
-            body="{ window.favorite($item.id, $item.fave == 1 ? 0 : 1) }"
+            body="{ window.favorite($item.id, $item.fave === 1 ? 0 : 1) }"
           />
         </event>
       </Checkbox>
@@ -44,3 +74,21 @@
   </Table>
 
 </Component>
+
+<!--
+  <Checkbox onDidChange="(newVal) => (console.log(JSON.stringify(newVal)))" initialValue="1">
+  </Checkbox>
+
+  <Form onSubmit="console.log(JSON.stringify($item)))" width="50%" data="{{ age: 43 }}">
+    <FlowLayout>
+      <H3>Customer Age</H3>
+      <FormItem bindTo="age" label="Age" type="integer" zeroOrPositive="true" />
+    </FlowLayout>
+  </Form>
+
+  <DropdownMenu onSelect="(newVal) => (console.log(JSON.stringify(newVal)))" label="Menu">
+    <MenuItem initialValue="1" label="One"/>
+    <MenuItem initialValue="2" label="Two"/>
+  </DropdownMenu>
+
+-->

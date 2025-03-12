@@ -69,7 +69,7 @@
                 }
             }
 
-            const query = JSON.stringify({ "sql": "select id, replace(substr(time,0,11),'-','/') as time, title, by, cast(score as integer) as score, cast(descendants as integer) as descendants, url, fave from hn " + whereClause + " order by time desc, cast(score as integer) desc limit 5000" });
+            const query = JSON.stringify({ "sql": "select id, replace(substr(time,0,11),'-','/') as time, title, by, cast(score as integer) as score, cast(descendants as integer) as descendants, url, fave from hn " + whereClause + " order by time desc, cast(score as integer) desc limit 500" });
             //console.log({ whereClause, query });
             return query;
         }

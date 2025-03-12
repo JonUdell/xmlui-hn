@@ -8,7 +8,7 @@
             <Page url="/">
                 <InfoCards />
                 <MentionsPage />
-            </Page>>
+            </Page>
             <Page url="/search">
                 <SearchPage />
             </Page>
