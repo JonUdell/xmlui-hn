@@ -1,4 +1,8 @@
-<Component name="SearchPage">
+<Component
+    name="SearchPage"
+    var.startDate="{ window.startDate }"
+    var.endDate="{ window.endDate }"
+>
 
     <VStack>
         <HStack verticalAlignment="center">
@@ -21,19 +25,24 @@
             startText="start"
             width="20%"
             dateFormat="yyyy-MM-dd"
-            initialValue="{ window.startDate.replaceAll('-','\/') }"
-            onDidChange="(val) => start = val"
+            initialValue="{ startDate.replaceAll('-','/') }"
+            onDidChange="(val) => startDate = val.replaceAll('/','-')"
         />
 
         <DatePicker
             startText="end"
             width="20%"
             dateFormat="yyyy-MM-dd"
-            initialValue="{ window.endDate.replaceAll('-','\/') }"
-            onDidChange="(val) => end = val"
+            initialValue="{ endDate.replaceAll('-','/') }"
+            onDidChange="(val) => endDate = val.replaceAll('/','-')"
         />
     </HStack>
 
-    <SearchDisplay term="{data.value}" option="{options.value}" />
+    <SearchDisplay
+        start="{startDate}"
+        end="{endDate}"
+        term="{data.value}"
+        option="{options.value}"
+    />
 
 </Component>

@@ -109,6 +109,9 @@
             return JSON.stringify({ sql });
         }
 
+        window.searchWrapper = function(start, end, term, option) {
+            return window.searchCombined({start:start, end:end, term:term, option:option})
+        }
 
 
         window.search = function (term, option) {
