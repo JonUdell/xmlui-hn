@@ -7,14 +7,47 @@
   var.limit="{ $props.limit }"
 >
 
-  <!--
-  <DataSource id="data" url="{ window.xmluiHost + '/query' }"
-    rawBody="{ window.search($props.term,$props.option) }" method="POST" />
-
--->
 
   <DataSource id="data" url="{ window.xmluiHost + '/query' }"
     rawBody="{ window.searchWrapper(start, end, term, option, limit) }" method="POST" />
+
+
+
+  <Table id="table" data="{data}">
+    <Column canSort="true" bindTo="id">
+      <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
+        { $item.id }
+      </Link>
+    </Column>
+    <Column canSort="true" bindTo="title" width="400px" />
+    <Column canSort="true" bindTo="by"    width="100px" minWidth="100px" />
+    <Column canSort="true" bindTo="time"  width="100px" />
+
+    <Column canSort="true" bindTo="score" width="40px" />
+
+    <Column canSort="true" bindTo="descendants" width="40px"  header="comments" />
+
+    <Column canSort="true" bindTo="url" width="3*">
+      <Link to="{$item.url}" target="_blank">
+        { $item.url }
+      </Link>
+    </Column>
+
+    <Column header="fave" width="35px">
+      <Checkbox initialValue="{$item.fave == 1}">
+        <event name="didChange">
+          <APICall
+            method="post"
+            url="{ window.xmluiHost + '/query' }"
+            body="{ window.favorite($item.id, $item.fave === 1 ? 0 : 1) }"
+          />
+        </event>
+      </Checkbox>
+    </Column>
+
+  </Table>
+
+</Component>
 
 
   <!--
@@ -67,42 +100,6 @@
 -->
 
 
-
-  <Table id="table" data="{data}">
-    <Column canSort="true" bindTo="id">
-      <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
-        { $item.id }
-      </Link>
-    </Column>
-    <Column canSort="true" bindTo="title" width="400px" />
-    <Column canSort="true" bindTo="by"    width="100px" minWidth="100px" />
-    <Column canSort="true" bindTo="time"  width="100px" />
-
-    <Column canSort="true" bindTo="score" width="40px" />
-
-    <Column canSort="true" bindTo="descendants" width="40px"  header="comments" />
-
-    <Column canSort="true" bindTo="url" width="3*">
-      <Link to="{$item.url}" target="_blank">
-        { $item.url }
-      </Link>
-    </Column>
-
-    <Column header="fave" width="20px">
-      <Checkbox initialValue="{$item.fave == 1}">
-        <event name="didChange">
-          <APICall
-            method="post"
-            url="{ window.xmluiHost + '/query' }"
-            body="{ window.favorite($item.id, $item.fave === 1 ? 0 : 1) }"
-          />
-        </event>
-      </Checkbox>
-    </Column>
-
-  </Table>
-
-</Component>
 
 <!--
   <Checkbox onDidChange="(newVal) => (console.log(JSON.stringify(newVal)))" initialValue="1">
