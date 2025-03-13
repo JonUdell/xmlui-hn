@@ -1,0 +1,122 @@
+<Component
+  name="SearchDisplay"
+  var.start="{ $props.start }"
+  var.end="{ $props.end }"
+  var.term="{ $props.term }"
+  var.option="{ $props.option }"
+>
+
+  <!--
+  <DataSource id="data" url="{ window.xmluiHost + '/query' }"
+    rawBody="{ window.search($props.term,$props.option) }" method="POST" />
+
+-->
+
+  <DataSource id="data2" url="{ window.xmluiHost + '/query' }"
+    rawBody="{ window.searchWrapper(start, end, term, option) }" method="POST" />
+
+
+  <!--
+
+  <HStack>
+
+  <Slider
+    id="slider"
+    maxValue="10"
+    step="1"
+    initialValue="{[0, 10]}"
+    label="Range"
+    onDidChange="(newRange) => ( sliderRange.setValue(newRange) )"
+  />
+
+    <TextBox
+      width="10%"
+      id="sliderRange"
+    />
+
+    <Button
+      label="updateSlider"
+      id="button1"
+      width="20%"
+      onClick="{ slider.setValue ( [ sliderRange.value[0]+1, sliderRange.value[1]+1 ] )   }"
+    />
+
+    <Button
+      data="{data}"
+      label="queryTable"
+      id="button2"
+      width="20%"
+      onClick="{ table.selectAll(); console.log(data), console.log(data.value); table.clearSelection();
+    }"
+    />
+    <Button
+      label="updateQuery"
+      id="button3"
+      width="20%"
+      onClick="{ start='2025-03-01'; end='2025-03-05' }"
+    />
+
+
+    <ChangeListener
+      listenTo="start"
+      onDidChange="console.log('start changed')"
+    />
+
+  </HStack>
+-->
+
+
+
+  <Table id="table" data="{data2}">
+    <Column canSort="true" bindTo="id">
+      <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
+        { $item.id }
+      </Link>
+    </Column>
+    <Column canSort="true" bindTo="title" width="400px" />
+    <Column canSort="true" bindTo="by"    width="80px" />
+    <Column canSort="true" bindTo="time" />
+
+    <Column canSort="true" bindTo="score" width="40px" />
+
+    <Column canSort="true" bindTo="descendants" width="40px"  header="comments" />
+
+    <Column canSort="true" bindTo="url" width="3*">
+      <Link to="{$item.url}" target="_blank">
+        { $item.url }
+      </Link>
+    </Column>
+
+    <Column header="fave" width="20px">
+      <Checkbox initialValue="{$item.fave == 1}">
+        <event name="didChange">
+          <APICall
+            method="post"
+            url="{ window.xmluiHost + '/query' }"
+            body="{ window.favorite($item.id, $item.fave === 1 ? 0 : 1) }"
+          />
+        </event>
+      </Checkbox>
+    </Column>
+
+  </Table>
+
+</Component>
+
+<!--
+  <Checkbox onDidChange="(newVal) => (console.log(JSON.stringify(newVal)))" initialValue="1">
+  </Checkbox>
+
+  <Form onSubmit="console.log(JSON.stringify($item)))" width="50%" data="{{ age: 43 }}">
+    <FlowLayout>
+      <H3>Customer Age</H3>
+      <FormItem bindTo="age" label="Age" type="integer" zeroOrPositive="true" />
+    </FlowLayout>
+  </Form>
+
+  <DropdownMenu onSelect="(newVal) => (console.log(JSON.stringify(newVal)))" label="Menu">
+    <MenuItem initialValue="1" label="One"/>
+    <MenuItem initialValue="2" label="Two"/>
+  </DropdownMenu>
+
+-->
