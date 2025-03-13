@@ -4,6 +4,7 @@
   var.end="{ $props.end }"
   var.term="{ $props.term }"
   var.option="{ $props.option }"
+  var.limit="{ $props.limit }"
 >
 
   <!--
@@ -12,8 +13,8 @@
 
 -->
 
-  <DataSource id="data2" url="{ window.xmluiHost + '/query' }"
-    rawBody="{ window.searchWrapper(start, end, term, option) }" method="POST" />
+  <DataSource id="data" url="{ window.xmluiHost + '/query' }"
+    rawBody="{ window.searchWrapper(start, end, term, option, limit) }" method="POST" />
 
 
   <!--
@@ -67,15 +68,15 @@
 
 
 
-  <Table id="table" data="{data2}">
+  <Table id="table" data="{data}">
     <Column canSort="true" bindTo="id">
       <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
         { $item.id }
       </Link>
     </Column>
     <Column canSort="true" bindTo="title" width="400px" />
-    <Column canSort="true" bindTo="by"    width="80px" />
-    <Column canSort="true" bindTo="time" />
+    <Column canSort="true" bindTo="by"    width="100px" minWidth="100px" />
+    <Column canSort="true" bindTo="time"  width="100px" />
 
     <Column canSort="true" bindTo="score" width="40px" />
 

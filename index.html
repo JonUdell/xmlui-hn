@@ -87,7 +87,7 @@
 
                 conditions.push(
                     `date(substr(time, 0, 11)) >= date('${normalizedStart}')` +
-                    ` AND date(substr(time, 0, 11)) <= date('${normalizedEnd}')`
+                    ` AND date(substr(time, 0, 11)) <= date('${normalizedEnd}') `
                 );
             }
 
@@ -109,57 +109,10 @@
             return JSON.stringify({ sql });
         }
 
-        window.searchWrapper = function(start, end, term, option) {
-            return window.searchCombined({start:start, end:end, term:term, option:option})
+        window.searchWrapper = function(start, end, term, option, limit) {
+            return window.searchCombined({start:start, end:end, term:term, option:option, limit:limit})
         }
 
-
-        window.search = function (term, option) {
-
-            // Default to empty string if term is undefined
-            if (term === undefined) {
-                term = "";
-            }
-
-            let whereClause = "";
-
-            // Check if a term is provided (not empty)
-            if (term !== "") {
-                // Check what option is selected
-                if (option === "undefined" || option === "all") {
-                    // Search in all fields (you might want to specify which fields)
-                    whereClause = "where title like '%" + term + "%' OR url like '%" + term + "%'";
-                } else {
-                    // Search in the specific field based on option
-                    whereClause = "where " + option + " like '%" + term + "%'";
-                }
-            }
-
-            const query = JSON.stringify({ "sql": "select id, replace(substr(time,0,11),'-','/') as time, title, by, cast(score as integer) as score, cast(descendants as integer) as descendants, url, fave from hn " + whereClause + " order by time desc, cast(score as integer) desc limit 500" });
-        }
-
-
-        window.searchDays = function (start, end) {
-            let whereClause = "";
-
-            //console.log(start, end)
-
-            whereClause = "where date(substr(time, 0, 11)) >= date('" + start.replace(/\//g, '-') + "')"
-                + " and date(substr(time, 0, 11)) <= date('" + end.replace(/\//g, '-') + "')"
-
-            //console.log(whereClause)
-
-            const query = JSON.stringify({
-                "sql": "select id, replace(substr(time,0,11),'-','/') as time, title, by, " +
-                    "cast(score as integer) as score, cast(descendants as integer) as descendants, " +
-                    "url, fave from hn " + whereClause +
-                    " order by time desc, cast(score as integer) desc limit 1000"
-            });
-
-            //console.log(query)
-
-            return query;
-        }
 
         window.mentionNames = {
             "company": "amazon,amd,apple,cloudflare,facebook,ibm,intel,mozilla,netflix,openai,tesla,tiktok,toshiba,twitter,sony,spacex,stripe,uber,zendesk,",
