@@ -3,6 +3,7 @@
         <NavPanel>
             <NavLink label="Home" to="/" />
             <NavLink label="Posts" to="/search" />
+            <NavLink label="Sources" to="/sources" />
         </NavPanel>
         <Pages>
             <Page url="/">
@@ -11,6 +12,9 @@
             </Page>
             <Page url="/search">
                 <SearchPage />
+            </Page>
+            <Page url="/sources">
+                <SourcesChart />
             </Page>
         </Pages>
 

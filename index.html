@@ -4,16 +4,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="xmlui/0.7.34.slider.js"></script>
-    <script src="xmlui/charts-0.1.7.js"></script>
+    <script src="xmlui/0.8.4.js"></script>
+    <script src="xmlui/charts-0.1.8.js"></script>
     <script>
-        window.xmluiHost = 'http://hn.jonudell.info/xmlui-hn'
+        window.xmluiHost = "http://hn.jonudell.info/xmlui-hn";
 
-        window.startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
-        window.endDate = new Date().toISOString().slice(0, 10)
+        window.startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+            .toISOString()
+            .slice(0, 10);
+        window.endDate = new Date().toISOString().slice(0, 10);
 
         window.mentions = function (names, days) {
-            const jsonNames = JSON.stringify(names.split(",").map(n => n.trim())); // Ensure valid JSON array
+            const jsonNames = JSON.stringify(names.split(",").map((n) => n.trim())); // Ensure valid JSON array
 
             const query = `
         WITH names AS (
@@ -38,19 +40,18 @@
             return query;
         };
 
-
         window.favorite = function (id, fave) {
-            const query = "update hn set fave = " + fave + " where id = " + id
-            return { "sql": query }
-        }
+            const query = "update hn set fave = " + fave + " where id = " + id;
+            return { sql: query };
+        };
 
         window.searchCombined = function (params = {}) {
             const {
                 term = "",
                 option = "all",
-                start = getDefaultStartDate(),  // today - 7 days
-                end = getDefaultEndDate(),      // today
-                limit = 500
+                start = getDefaultStartDate(), // today - 7 days
+                end = getDefaultEndDate(), // today
+                limit = 500,
             } = params;
 
             const whereClause = buildWhereClause(term, option, start, end);
@@ -63,7 +64,9 @@
         }
 
         function getDefaultStartDate() {
-            return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+            return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                .toISOString()
+                .slice(0, 10);
         }
 
         function buildWhereClause(term, option, start, end) {
@@ -71,19 +74,15 @@
 
             if (term) {
                 if (option === "undefined" || option === "all") {
-                    conditions.push(
-                        `(title LIKE '%${term}%' OR url LIKE '%${term}%')`
-                    );
+                    conditions.push(`(title LIKE '%${term}%' OR url LIKE '%${term}%')`);
                 } else {
-                    conditions.push(
-                        `${option} LIKE '%${term}%'`
-                    );
+                    conditions.push(`${option} LIKE '%${term}%'`);
                 }
             }
 
             if (start && end) {
-                const normalizedStart = start.replace(/\//g, '-');
-                const normalizedEnd = end.replace(/\//g, '-');
+                const normalizedStart = start.replace(/\//g, "-");
+                const normalizedEnd = end.replace(/\//g, "-");
 
                 conditions.push(
                     `date(substr(time, 0, 11)) >= date('${normalizedStart}')` +
@@ -109,39 +108,101 @@
             return JSON.stringify({ sql });
         }
 
-        window.searchWrapper = function(start, end, term, option, limit) {
-            return window.searchCombined({start:start, end:end, term:term, option:option, limit:limit})
-        }
+        window.searchWrapper = function (start, end, term, option, limit) {
+            return window.searchCombined({
+                start: start,
+                end: end,
+                term: term,
+                option: option,
+                limit: limit,
+            });
+        };
 
+        window.sources = function (domain) {
+            const query = `
+          with items_by_day as (
+            select
+                strftime('%Y-%m-%d', substr(time, 1, 19)) as day,
+                case
+                when url like 'http://%' then
+                    substr(
+                    url,
+                    8,
+                    instr(substr(url, 8), '/') - 1
+                    )
+                when url like 'https://%' then
+                    substr(
+                    url,
+                    9,
+                    instr(substr(url, 9), '/') - 1
+                    )
+                else
+                    null
+                end as domain
+            from hn
+            )
+          select
+            day,
+            count(*) as stories
+          from
+            items_by_day
+          where
+           domain = '${domain}'
+          group by
+           day
+          order by
+           day desc
+          limit 5
+        `
+            return { sql: query }
+        };
 
         window.mentionNames = {
-            "company": "amazon,amd,apple,cloudflare,facebook,ibm,intel,mozilla,netflix,openai,tesla,tiktok,toshiba,twitter,sony,spacex,stripe,uber,zendesk,",
-            "language": "c#,clojure,css,erlang,golang,haskell,html,javascript,json,php,python,rust,sql,swift,typescript,webassembly,wasm,xml,",
-            "db": "clickhouse,citus,couchdb,db2,duckdb,mongodb,mysql,oracle,postgres,redis,sql server,timescale,sqlite,supabase,steampipe,yugabyte,"
-        }
+            company:
+                "amazon,amd,apple,cloudflare,facebook,ibm,intel,mozilla,netflix,openai,tesla,tiktok,toshiba,twitter,sony,spacex,stripe,uber,zendesk,",
+            language:
+                "c#,clojure,css,erlang,golang,haskell,html,javascript,json,php,python,rust,sql,swift,typescript,webassembly,wasm,xml,",
+            db: "clickhouse,citus,couchdb,db2,duckdb,mongodb,mysql,oracle,postgres,redis,sql server,timescale,sqlite,supabase,steampipe,yugabyte,",
+        };
         window.sql = {
-            "stories": { "sql": "select count(*) as value from hn" },
-            "days": { "sql": "select count(distinct substr(time, 1, 10)) as value from hn" },
-            "askhn": { "sql": "select count(*) as value from hn where title like '%Ask HN%'" },
-            "showhn": { "sql": "select count(*) as value from hn where title like '%Show HN%'" },
-            "oldest": { "sql": "select substr(min(time),0,11) as value from hn" },
-            "newest": { "sql": "select substr(max(time),0,11) as value from hn" },
-            "maxscore": { "sql": "select max(score) as value from hn" },
-            "companymentions7": { "sql": window.mentions(window.mentionNames.company, 7) },
-            "companymentions30": { "sql": window.mentions(window.mentionNames.company, 30) },
-            "companymentions90": { "sql": window.mentions(window.mentionNames.company, 90) },
-            "languagementions7": { "sql": window.mentions(window.mentionNames.language, 7) },
-            "languagementions30": { "sql": window.mentions(window.mentionNames.language, 30) },
-            "languagementions90": { "sql": window.mentions(window.mentionNames.language, 90) },
-            "dbmentions7": { "sql": window.mentions(window.mentionNames.db, 7) },
-            "dbmentions30": { "sql": window.mentions(window.mentionNames.db, 30) },
-            "dbmentions90": { "sql": window.mentions(window.mentionNames.db, 90) },
-        }
-
+            stories: { sql: "select count(*) as value from hn" },
+            days: {
+                sql: "select count(distinct substr(time, 1, 10)) as value from hn",
+            },
+            askhn: {
+                sql: "select count(*) as value from hn where title like '%Ask HN%'",
+            },
+            showhn: {
+                sql: "select count(*) as value from hn where title like '%Show HN%'",
+            },
+            oldest: { sql: "select substr(min(time),0,11) as value from hn" },
+            newest: { sql: "select substr(max(time),0,11) as value from hn" },
+            maxscore: { sql: "select max(score) as value from hn" },
+            companymentions7: {
+                sql: window.mentions(window.mentionNames.company, 7),
+            },
+            companymentions30: {
+                sql: window.mentions(window.mentionNames.company, 30),
+            },
+            companymentions90: {
+                sql: window.mentions(window.mentionNames.company, 90),
+            },
+            languagementions7: {
+                sql: window.mentions(window.mentionNames.language, 7),
+            },
+            languagementions30: {
+                sql: window.mentions(window.mentionNames.language, 30),
+            },
+            languagementions90: {
+                sql: window.mentions(window.mentionNames.language, 90),
+            },
+            dbmentions7: { sql: window.mentions(window.mentionNames.db, 7) },
+            dbmentions30: { sql: window.mentions(window.mentionNames.db, 30) },
+            dbmentions90: { sql: window.mentions(window.mentionNames.db, 90) },
+        };
     </script>
 </head>
 
-<body>
-</body>
+<body></body>
 
 </html>
