@@ -1,6 +1,5 @@
 <Component name="SourcesChart" xmlns:XMLUIExtensions="component-ns">
 
-</Theme>
     <DataSource id="sources" url="{ window.xmluiHost + '/query' }"
         body="{ window.sources('www.nytimes.com') }" method="POST" />
 
