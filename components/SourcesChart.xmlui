@@ -1,0 +1,52 @@
+<Component name="SourcesChart" xmlns:XMLUIExtensions="component-ns">
+
+</Theme>
+    <DataSource id="sources" url="{ window.xmluiHost + '/query' }"
+        body="{ window.sources('www.nytimes.com') }" method="POST" />
+
+     <Text>Data: {JSON.stringify(sources.value)}</Text>
+
+     <Text>Markup: use the inspector to see it</Text>
+
+
+    <VStack inspect="true">
+
+        <HStack>
+            <H1>Pie</H1>
+
+            <Card width="400px" height="400px">
+                <XMLUIExtensions:PieChart data="{sources.value}" dataKey="stories" nameKey="day"
+                    showLabel="true" />
+            </Card>
+
+            <H1>Donut</H1>
+
+            <Card width="400px" height="400px">
+                <XMLUIExtensions:DonutChart data="{sources.value}" dataKey="stories" nameKey="day"
+                    showLabel="true" />
+            </Card>
+        </HStack>
+
+        <HStack>
+
+            <H1>Bar</H1>
+
+            <Card width="400px" height="400px">
+                <XMLUIExtensions:BarChart data="{sources.value}" dataKey="stories" nameKey="day"
+                    showLabel="true" />
+            </Card>
+
+            <H1>Line</H1>
+
+            <Card width="400px" height="400px">
+                <XMLUIExtensions:LineChart data="{sources.value}" dataKey="stories" nameKey="day"
+                    showLabel="true" />
+            </Card>
+        </HStack>
+
+
+    </VStack>
+
+
+
+</Component>
