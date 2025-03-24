@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="xmlui/0.8.5.js"></script>
-    <script src="xmlui/charts-0.1.8.js"></script>
+    <script src="xmlui/charts-0.1.9-interval.js"></script>
     <script>
         window.xmluiHost = "http://hn.jonudell.info/xmlui-hn";
 
@@ -120,28 +120,39 @@
 
         window.daysSources = function (domain) {
             const query = `
-                with items_by_day as (
-                select
-                    datetime(substr(time, 1, 10)) as day,
+                with
+                recursive dates(day) as (
+                    select date(min(substr(time, 1, 10))) from hn
+                    union all
+                    select date(day, '+1 day') from dates
+                    where day < (select date(max(substr(time, 1, 10))) from hn)
+                ),
+                items_by_day as (
+                    select
+                    date(substr(time, 1, 10)) as day,
                     substr(
-                    url,
-                    instr(url, '//') + 2,
-                    instr(substr(url, instr(url, '//') + 2), '/') - 1
+                        url,
+                        instr(url, '//') + 2,
+                        instr(substr(url, instr(url, '//') + 2), '/') - 1
                     ) as domain
-                from hn
-                where url like 'http%://%/%'
+                    from hn
+                    where url like 'http%://%/%'
+                ),
+                counts as (
+                    select
+                    day,
+                    count(*) as stories
+                    from items_by_day
+                    where domain = '${domain}'
+                    group by day
                 )
                 select
-                day,
-                count(*) as stories
-                from
-                items_by_day
-                where
-                domain = '${domain}'
-                group by
-                day
-                order by
-                day;
+                dates.day,
+                coalesce(counts.stories, 0) as stories
+                from dates
+                left join counts on dates.day = counts.day
+                order by dates.day;
+
         `
             return { sql: query }
         };

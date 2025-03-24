@@ -1,11 +1,16 @@
-<Component name="SourcesChart" xmlns:XMLUIExtensions="component-ns">
+<Component
+    name="SourcesChart"
+    xmlns:XMLUIExtensions="component-ns"
+    <!-- var.selection="" -->
+>
 
 
     <DataSource id="daysSources" url="{ window.xmluiHost + '/query' }"
         body="{ window.daysSources(domains.value) }" method="POST" />
 
     <DataSource id="distinctSources" url="{ window.xmluiHost + '/query' }"
-        body="{ window.distinctSources(domains.value) }" method="POST" />
+        body="{ window.distinctSources(domains.value) }" method="POST"
+         transformResult="{(data) => data.map((row, index) => ({...row, id: `${index}`}))}" />
 
 
     <VStack inspect="true">
@@ -23,7 +28,13 @@
 
             <VStack width="30%">
 
-                <Table data="{distinctSources}">
+                <Table
+                    data="{distinctSources}"
+                    <!--
+                    rowsSelectable="true"
+                    onSelectionDidChange="(newSel) => selection = newSel.map(item => domains.setValue(item.domain))"
+                    -->
+                  >
                   <Column bindTo="domain" canSort="true"/>
                   <Column bindTo="count"  canSort="true" />
                 </Table>
@@ -36,17 +47,17 @@
 
                 <Card width="100%" height="400px">
                     <XMLUIExtensions:BarChart
-                        layout="horizontal"
+                        layout="vertical"
                         data="{daysSources.value}"
                         dataKeys="{['stories']}" nameKey="day"
                         showLabel="true"
                         tickFormatter="{(value) => {
-                return getDate(value).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                });
-            }}"
+                        return getDate(value).toLocaleDateString('en-CA', {
+                            year: '2-digit',
+                            month: '2-digit',
+                            day: '2-digit'
+                        }).replaceAll('-', '/');
+                        }}"
                     />
                 </Card>
             </VStack>
