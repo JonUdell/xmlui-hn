@@ -1,51 +1,34 @@
 <Component name="SourcesChart" xmlns:XMLUIExtensions="component-ns">
 
-    <DataSource id="sources" url="{ window.xmluiHost + '/query' }"
-        body="{ window.sources('www.nytimes.com') }" method="POST" />
+    <H1>Stories by day for {source}</H1>
 
-     <Text>Data: {JSON.stringify(sources.value)}</Text>
-
-     <Text>Markup: use the inspector to see it</Text>
-
+    <DataSource id="daysSources" url="{ window.xmluiHost + '/query' }"
+        body="{ window.daysSources('www.nytimes.com') }" method="POST" />
 
     <VStack inspect="true">
 
-        <HStack>
-            <H1>Pie</H1>
+        <Select>
+            <Items data="{distinctSources}" >
+            <Option value="{$itemIndex}" label="{$item}" />
+            </Items>
+        </Select>
 
-            <Card width="400px" height="400px">
-                <XMLUIExtensions:PieChart data="{sources.value}" dataKey="stories" nameKey="day"
-                    showLabel="true" />
-            </Card>
-
-            <H1>Donut</H1>
-
-            <Card width="400px" height="400px">
-                <XMLUIExtensions:DonutChart data="{sources.value}" dataKey="stories" nameKey="day"
-                    showLabel="true" />
-            </Card>
-        </HStack>
-
-        <HStack>
-
-            <H1>Bar</H1>
-
-            <Card width="400px" height="400px">
-                <XMLUIExtensions:BarChart data="{sources.value}" dataKey="stories" nameKey="day"
-                    showLabel="true" />
-            </Card>
-
-            <H1>Line</H1>
-
-            <Card width="400px" height="400px">
-                <XMLUIExtensions:LineChart data="{sources.value}" dataKey="stories" nameKey="day"
-                    showLabel="true" />
-            </Card>
-        </HStack>
-
+        <Card width="100%" height="400px">
+            <XMLUIExtensions:BarChart
+                layout="horizontal"
+                data="{daysSources.value}"
+                dataKeys="{['stories']}" nameKey="day"
+                showLabel="true"
+                tickFormatter="{(value) => {
+                return getDate(value).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                });
+            }}"
+            />
+        </Card>
 
     </VStack>
-
 
 
 </Component>

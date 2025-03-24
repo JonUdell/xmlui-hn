@@ -118,28 +118,18 @@
             });
         };
 
-        window.sources = function (domain) {
+        window.daysSources = function (domain) {
             const query = `
           with items_by_day as (
             select
                 strftime('%Y-%m-%d', substr(time, 1, 19)) as day,
-                case
-                when url like 'http://%' then
-                    substr(
+                substr(
                     url,
-                    8,
-                    instr(substr(url, 8), '/') - 1
-                    )
-                when url like 'https://%' then
-                    substr(
-                    url,
-                    9,
-                    instr(substr(url, 9), '/') - 1
-                    )
-                else
-                    null
-                end as domain
-            from hn
+                    instr(url, '//') + 2,
+                    instr(substr(url, instr(url, '//') + 2), '/') - 1
+                ) as domain
+                from hn
+                where url like 'http%://%/%'
             )
           select
             day,
@@ -147,15 +137,30 @@
           from
             items_by_day
           where
-           domain = '${domain}'
+           domain = 'www.nytimes.com'
           group by
            day
           order by
-           day desc
-          limit 5
+           day
         `
             return { sql: query }
         };
+
+        window.distinctSources = function () {
+            const query = `
+            select distinct
+                substr(
+                    url,
+                    instr(url, '//') + 2,
+                    instr(substr(url, instr(url, '//') + 2), '/') - 1
+                ) as domain
+            from hn
+            where url like 'http%://%/%'
+            order by domain
+        `
+            return { sql: query }
+        };
+
 
         window.mentionNames = {
             company:
