@@ -116,16 +116,15 @@
         // Add this to your index.html script section
         window.queryCache = {};
 
-        window.daysSources = function (domain, minDate, maxDate) {
-            // Create a cache key based on the query parameters
+        window.daysSources = function (domain, minDate, maxDate, forceRefresh = false) {
             const cacheKey = `${domain}-${minDate}-${maxDate}`;
 
-            // Check if we have a cached result for this query
-            if (window.queryCache[cacheKey]) {
+            if (!forceRefresh && window.queryCache[cacheKey]) {
                 console.log('Using cached query result for:', cacheKey);
                 return window.queryCache[cacheKey];
             }
 
+            console.log('Running new query for:', cacheKey);
             // If not in cache, generate the query
             const query = `
                 with recursive dates(day) as (
@@ -162,8 +161,6 @@
                 left join counts on dates.day = counts.day
                 order by dates.day;
             `;
-
-            console.log('Running new query for:', cacheKey);
 
             // Store the result in cache
             const result = { sql: query };
