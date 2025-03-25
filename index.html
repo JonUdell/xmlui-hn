@@ -173,7 +173,7 @@
                     where url like 'http%://%/%'
                 )
                 group by domain
-                having count > 5
+                having count > 10
                 order by domain;
         `
             return { sql: query }

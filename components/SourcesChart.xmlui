@@ -1,24 +1,22 @@
 <Component
     name="SourcesChart"
     xmlns:XMLUIExtensions="component-ns"
-    <!-- var.selection="" -->
+    var.selectedDomain="www.nytimes.com"
 >
-
 
     <DataSource id="daysSources" url="{ window.xmluiHost + '/query' }"
         body="{ window.daysSources(domains.value) }" method="POST" />
 
     <DataSource id="distinctSources" url="{ window.xmluiHost + '/query' }"
-        body="{ window.distinctSources(domains.value) }" method="POST"
-         transformResult="{(data) => data.map((row, index) => ({...row, id: `${index}`}))}" />
-
+        body="{ window.distinctSources(selectedDomain.value) }" method="POST"
+    />
 
     <VStack inspect="true">
 
         <AutoComplete
             width="30%"
             id="domains"
-            initialValue="www.nytimes.com">
+            initialValue="{selectedDomain}">
             <Items data="{distinctSources}">
                 <Option value="{$item.domain}" label="{$item.domain}" />
             </Items>
@@ -30,12 +28,13 @@
 
                 <Table
                     data="{distinctSources}"
-                    <!--
-                    rowsSelectable="true"
-                    onSelectionDidChange="(newSel) => selection = newSel.map(item => domains.setValue(item.domain))"
-                    -->
                   >
-                  <Column bindTo="domain" canSort="true"/>
+                  <Column bindTo="domain" canSort="true">
+                  <!--
+                    <Link to="/sources" label="{$item.domain}"  />
+                   -->
+                    <Link label="{$item.domain}" onClick="selectedDomain = $item.domain" />
+                  </Column>
                   <Column bindTo="count"  canSort="true" />
                 </Table>
 
@@ -43,7 +42,7 @@
 
             <VStack width="70%">
 
-                <H1>Stories by day</H1>
+                <H1>Stories by day for {domains.value} </H1>
 
                 <Card width="100%" height="400px">
                     <XMLUIExtensions:BarChart
