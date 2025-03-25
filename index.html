@@ -238,27 +238,32 @@
     </script>
 
     <script>
-
         const MS_PER_DAY = 86400 * 1000;
 
         const dateDiffInDays = (d1, d2) => Math.floor((d2 - d1) / MS_PER_DAY);
 
-        window.minDate = new Date('2025-01-01');
+        window.minDate = new Date('2022-06-30');
         window.maxDate = new Date('2025-03-24');
 
-        window.initialStartValue = 0;
-        window.initialEndValue = dateDiffInDays(window.minDate, window.maxDate);
-
-        const totalDays = dateDiffInDays(minDate, maxDate); // e.g. 83
-        window.totalRange = totalDays;
-
+        // Define date conversion functions first
         window.dateToSliderValue = function (date) {
-            return dateDiffInDays(minDate, new Date(date));
+            return dateDiffInDays(window.minDate, new Date(date));
         };
 
         window.sliderValueToDate = function (value) {
-            return new Date(minDate.getTime() + value * MS_PER_DAY);
+            return new Date(window.minDate.getTime() + value * MS_PER_DAY);
         };
+
+        // Then calculate derived values
+        const totalDays = dateDiffInDays(window.minDate, window.maxDate);
+        window.totalRange = totalDays;
+
+        window.initialEndValue = totalDays;
+        window.initialStartValue = totalDays - 90;
+
+        // Now use the functions after they're defined
+        window.initialStartDate = window.sliderValueToDate(window.initialStartValue).toISOString().slice(0, 10);
+        window.initialEndDate = window.sliderValueToDate(window.initialEndValue).toISOString().slice(0, 10);
 
         window.formatDate = (dateInput) => {
             // Convert to a proper Date object if it's a string

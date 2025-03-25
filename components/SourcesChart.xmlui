@@ -5,8 +5,8 @@
     var.throttleDelay="500"
     var.queryCounter="0"
     var.lastSliderUpdate="{ Date.now() }"
-    var.debouncedStartDate="{ window.minDate.toISOString().slice(0, 10) }"
-    var.debouncedEndDate="{ window.maxDate.toISOString().slice(0, 10) }" >
+    var.debouncedStartDate="{ window.initialStartDate }"
+    var.debouncedEndDate="{ window.initialEndDate }" >
 
     <DataSource
         id="daysSources"
@@ -61,25 +61,19 @@
                     step="1"
                     width="90%"
                     onDidChange="{
-                        // Simple throttling using timestamp comparison
                         const now = Date.now();
                         if (now - lastSliderUpdate > throttleDelay) {
-                            // Update the debounced date values
                             debouncedStartDate = window.sliderValueToDate(slider.value[0]).toISOString().slice(0, 10);
                             debouncedEndDate = window.sliderValueToDate(slider.value[1]).toISOString().slice(0, 10);
                             lastSliderUpdate = now;
-
-                            // Increment counter to force refresh
                             queryCounter = queryCounter + 1;
-
-                            console.log('Updating dates:', debouncedStartDate, debouncedEndDate, 'Counter:', queryCounter);
                         }
                     }"
                     valueFormat="{ (value) => {
-            const date = window.sliderValueToDate(value);
-            return window.formatDate(date)
-            }
-        }"
+                        const date = window.sliderValueToDate(value);
+                        return window.formatDate(date)
+                        }
+                    }"
                 />
 
                 <Card width="100%" height="800px">
