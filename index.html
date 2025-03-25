@@ -118,6 +118,7 @@
             });
         };
 
+        /*
         window.daysSources = function (domain) {
             const query = `
                 with recursive dates(day) as (
@@ -156,6 +157,48 @@
         `
             return { sql: query }
         };
+        */
+
+        window.daysSources = function (domain, minDate, maxDate) {
+            const query = `
+                with recursive dates(day) as (
+                    select date('${minDate}')
+                    union all
+                    select date(day, '+1 day') from dates
+                    where day < date('${maxDate}')
+                ),
+                items_by_day as (
+                    select
+                        date(substr(time, 1, 10)) as day,
+                        substr(
+                            url,
+                            instr(url, '//') + 2,
+                            instr(substr(url, instr(url, '//') + 2), '/') - 1
+                        ) as domain
+                    from hn
+                    where url like 'http%://%/%'
+                    and date(substr(time, 1, 10)) between date('${minDate}') and date('${maxDate}')
+                ),
+                counts as (
+                    select
+                        day,
+                        count(*) as stories
+                    from items_by_day
+                    where domain = '${domain}'
+                    group by day
+                )
+                select
+                    dates.day,
+                    coalesce(counts.stories, 0) as stories
+                from
+                    dates
+                left join counts on dates.day = counts.day
+                order by dates.day;
+            `;
+            return { sql: query };
+        };
+
+
 
         window.distinctSources = function () {
             const query = `
@@ -235,7 +278,7 @@
         window.maxDate = new Date('2025-03-24');
 
         window.initialStartValue = 0;
-        window.initialEndValue = dateDiffInDays(window.minDate, window.maxDate);  
+        window.initialEndValue = dateDiffInDays(window.minDate, window.maxDate);
 
         const totalDays = dateDiffInDays(minDate, maxDate); // e.g. 83
         window.totalRange = totalDays;

@@ -5,7 +5,7 @@
 >
 
     <DataSource id="daysSources" url="{ window.xmluiHost + '/query' }"
-        body="{ window.daysSources(domains.value) }" method="POST" />
+        body="{ window.daysSources(domains.value, '2025-01-01', '2025-03-24') }" method="POST" />
 
     <DataSource id="distinctSources" url="{ window.xmluiHost + '/query' }"
         body="{ window.distinctSources(selectedDomain.value) }" method="POST"
