@@ -121,7 +121,7 @@
         window.daysSources = function (domain) {
             const query = `
                 with recursive dates(day) as (
-                    select date(min(substr(time, 1, 10))) from hn
+                    select max(date('2025-01-01'), date(min(substr(time, 1, 10)))) from hn
                     union all
                     select date(day, '+1 day') from dates
                     where day < (select date(max(substr(time, 1, 10))) from hn)
@@ -226,23 +226,26 @@
     </script>
 
     <script>
-        // Define your min and max dates (adjust as needed)
+
+        const MS_PER_DAY = 86400 * 1000;
+
+        const dateDiffInDays = (d1, d2) => Math.floor((d2 - d1) / MS_PER_DAY);
+
         window.minDate = new Date('2025-01-01');
-        window.maxDate = new Date('2025-03-20');
+        window.maxDate = new Date('2025-03-24');
 
-        // Calculate the total range in milliseconds
-        window.totalRange = maxDate.getTime() - minDate.getTime();
+        window.initialStartValue = 0;
+        window.initialEndValue = dateDiffInDays(window.minDate, window.maxDate);  
 
-        // Helper functions for date conversion
+        const totalDays = dateDiffInDays(minDate, maxDate); // e.g. 83
+        window.totalRange = totalDays;
+
         window.dateToSliderValue = function (date) {
-            // Convert a Date to a slider value (0-100)
-            return Math.round(((date.getTime() - minDate.getTime()) / totalRange) * 100);
+            return dateDiffInDays(minDate, new Date(date));
         };
 
         window.sliderValueToDate = function (value) {
-            // Convert a slider value (0-100) to a Date
-            const exactMs = minDate.getTime() + (totalRange * (value / 100));
-            return new Date(exactMs);
+            return new Date(minDate.getTime() + value * MS_PER_DAY);
         };
 
         window.formatDate = (dateInput) => {
@@ -259,14 +262,6 @@
             // Return in yy/mm/dd format
             return `${year}/${month}/${day}`;
         };
-
-        // Define initial date values (example: Jan 15 to Nov 15)
-        window.initialStartDate = new Date('2025-03-01');
-        window.initialEndDate = new Date('2025-03-20');
-
-        // Convert to slider values (0-100)
-        window.initialStartValue = dateToSliderValue(initialStartDate);
-        window.initialEndValue = dateToSliderValue(initialEndDate);
     </script>
 </head>
 

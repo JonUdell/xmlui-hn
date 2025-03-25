@@ -48,9 +48,12 @@
                 <Slider
                     id="slider"
                     label="dateRange"
+                    minValue="{0}"
+                    maxValue="{window.totalRange}"
                     initialValue="{ [window.initialStartValue, window.initialEndValue] }"
+                    step="1"
                     width="90%"
-                    onDidChange="console.log('change', JSON.stringify(slider))"
+                    onDidChange="console.log('change', window.sliderValueToDate(slider.value[0]), window.sliderValueToDate(slider.value[1]))"
                     valueFormat="{ (value) => {
                         const date = window.sliderValueToDate(value);
                         return window.formatDate(date)
