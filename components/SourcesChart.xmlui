@@ -28,21 +28,35 @@
 
                 <Table
                     data="{distinctSources}"
-                  >
-                  <Column bindTo="domain" canSort="true">
-                  <!--
+                >
+                    <Column bindTo="domain" canSort="true">
+                        <!--
                     <Link to="/sources" label="{$item.domain}"  />
                    -->
-                    <Link label="{$item.domain}" onClick="selectedDomain = $item.domain" />
-                  </Column>
-                  <Column bindTo="count"  canSort="true" />
+                        <Link label="{$item.domain}" onClick="selectedDomain = $item.domain" />
+                    </Column>
+                    <Column bindTo="count" canSort="true" />
                 </Table>
 
             </VStack>
 
             <VStack width="70%">
 
+
                 <H1>Stories by day for {domains.value} </H1>
+
+                <Slider
+                    id="slider"
+                    label="dateRange"
+                    initialValue="{ [window.initialStartValue, window.initialEndValue] }"
+                    width="90%"
+                    onDidChange="console.log('change', JSON.stringify(slider))"
+                    valueFormat="{ (value) => {
+                        const date = window.sliderValueToDate(value);
+                        return window.formatDate(date)
+                        }
+                    }"
+                />
 
                 <Card width="100%" height="800px">
                     <XMLUIExtensions:BarChart

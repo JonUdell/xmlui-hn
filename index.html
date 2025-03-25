@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="xmlui/0.8.5.js"></script>
-    <script src="xmlui/charts-0.1.9-interval.js"></script>
+    <script src="xmlui/0.8.6-slider.js"></script>
+    <script src="xmlui/charts-0.1.10-interval.js"></script>
     <script>
         window.xmluiHost = "http://hn.jonudell.info/xmlui-hn";
 
@@ -120,8 +120,7 @@
 
         window.daysSources = function (domain) {
             const query = `
-                with
-                recursive dates(day) as (
+                with recursive dates(day) as (
                     select date(min(substr(time, 1, 10))) from hn
                     union all
                     select date(day, '+1 day') from dates
@@ -147,9 +146,10 @@
                     group by day
                 )
                 select
-                dates.day,
-                coalesce(counts.stories, 0) as stories
-                from dates
+                    dates.day,
+                    coalesce(counts.stories, 0) as stories
+                from
+                    dates
                 left join counts on dates.day = counts.day
                 order by dates.day;
 
@@ -223,6 +223,50 @@
             dbmentions30: { sql: window.mentions(window.mentionNames.db, 30) },
             dbmentions90: { sql: window.mentions(window.mentionNames.db, 90) },
         };
+    </script>
+
+    <script>
+        // Define your min and max dates (adjust as needed)
+        window.minDate = new Date('2025-01-01');
+        window.maxDate = new Date('2025-03-20');
+
+        // Calculate the total range in milliseconds
+        window.totalRange = maxDate.getTime() - minDate.getTime();
+
+        // Helper functions for date conversion
+        window.dateToSliderValue = function (date) {
+            // Convert a Date to a slider value (0-100)
+            return Math.round(((date.getTime() - minDate.getTime()) / totalRange) * 100);
+        };
+
+        window.sliderValueToDate = function (value) {
+            // Convert a slider value (0-100) to a Date
+            const exactMs = minDate.getTime() + (totalRange * (value / 100));
+            return new Date(exactMs);
+        };
+
+        window.formatDate = (dateInput) => {
+            // Convert to a proper Date object if it's a string
+            const date = (typeof dateInput === 'string')
+                ? new Date(dateInput)
+                : dateInput;
+
+            // Extract year, month, and day and format manually
+            const year = date.getFullYear().toString().slice(-2); // Get last 2 digits of year
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+            const day = date.getDate().toString().padStart(2, '0');
+
+            // Return in yy/mm/dd format
+            return `${year}/${month}/${day}`;
+        };
+
+        // Define initial date values (example: Jan 15 to Nov 15)
+        window.initialStartDate = new Date('2025-03-01');
+        window.initialEndDate = new Date('2025-03-20');
+
+        // Convert to slider values (0-100)
+        window.initialStartValue = dateToSliderValue(initialStartDate);
+        window.initialEndValue = dateToSliderValue(initialEndDate);
     </script>
 </head>
 
