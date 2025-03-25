@@ -9,11 +9,6 @@
     <script>
         window.xmluiHost = "http://hn.jonudell.info/xmlui-hn";
 
-        window.startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-            .toISOString()
-            .slice(0, 10);
-        window.endDate = new Date().toISOString().slice(0, 10);
-
         window.mentions = function (names, days) {
             const jsonNames = JSON.stringify(names.split(",").map((n) => n.trim())); // Ensure valid JSON array
 
@@ -118,48 +113,20 @@
             });
         };
 
-        /*
-        window.daysSources = function (domain) {
-            const query = `
-                with recursive dates(day) as (
-                    select max(date('2025-01-01'), date(min(substr(time, 1, 10)))) from hn
-                    union all
-                    select date(day, '+1 day') from dates
-                    where day < (select date(max(substr(time, 1, 10))) from hn)
-                ),
-                items_by_day as (
-                    select
-                    date(substr(time, 1, 10)) as day,
-                    substr(
-                        url,
-                        instr(url, '//') + 2,
-                        instr(substr(url, instr(url, '//') + 2), '/') - 1
-                    ) as domain
-                    from hn
-                    where url like 'http%://%/%'
-                ),
-                counts as (
-                    select
-                    day,
-                    count(*) as stories
-                    from items_by_day
-                    where domain = '${domain}'
-                    group by day
-                )
-                select
-                    dates.day,
-                    coalesce(counts.stories, 0) as stories
-                from
-                    dates
-                left join counts on dates.day = counts.day
-                order by dates.day;
-
-        `
-            return { sql: query }
-        };
-        */
+        // Add this to your index.html script section
+        window.queryCache = {};
 
         window.daysSources = function (domain, minDate, maxDate) {
+            // Create a cache key based on the query parameters
+            const cacheKey = `${domain}-${minDate}-${maxDate}`;
+
+            // Check if we have a cached result for this query
+            if (window.queryCache[cacheKey]) {
+                console.log('Using cached query result for:', cacheKey);
+                return window.queryCache[cacheKey];
+            }
+
+            // If not in cache, generate the query
             const query = `
                 with recursive dates(day) as (
                     select date('${minDate}')
@@ -195,10 +162,15 @@
                 left join counts on dates.day = counts.day
                 order by dates.day;
             `;
-            return { sql: query };
+
+            console.log('Running new query for:', cacheKey);
+
+            // Store the result in cache
+            const result = { sql: query };
+            window.queryCache[cacheKey] = result;
+
+            return result;
         };
-
-
 
         window.distinctSources = function () {
             const query = `

@@ -2,10 +2,13 @@
     name="SourcesChart"
     xmlns:XMLUIExtensions="component-ns"
     var.selectedDomain="www.nytimes.com"
+    var.debouncedStartDate="{ window.minDate.toISOString().slice(0, 10) }"
+    var.debouncedEndDate="{ window.maxDate.toISOString().slice(0, 10) }"
 >
 
     <DataSource id="daysSources" url="{ window.xmluiHost + '/query' }"
-        body="{ window.daysSources(domains.value, '2025-01-01', '2025-03-24') }" method="POST" />
+        body="{ window.daysSources(domains.value, debouncedStartDate, debouncedEndDate) }"
+        method="POST" />
 
     <DataSource id="distinctSources" url="{ window.xmluiHost + '/query' }"
         body="{ window.distinctSources(selectedDomain.value) }" method="POST"
@@ -53,12 +56,24 @@
                     initialValue="{ [window.initialStartValue, window.initialEndValue] }"
                     step="1"
                     width="90%"
-                    onDidChange="console.log('change', window.sliderValueToDate(slider.value[0]), window.sliderValueToDate(slider.value[1]))"
+                    onDidChange="{
+            // Simple throttling using timestamp comparison
+            const now = Date.now();
+            if (now - lastSliderUpdate > throttleDelay) {
+                // Update the debounced date values
+                debouncedStartDate = window.sliderValueToDate(slider.value[0]).toISOString().slice(0, 10);
+                debouncedEndDate = window.sliderValueToDate(slider.value[1]).toISOString().slice(0, 10);
+                lastSliderUpdate = now;
+                console.log('Updating dates:', debouncedStartDate, debouncedEndDate);
+            }
+
+            console.log('Slider changed:', window.sliderValueToDate(slider.value[0]), window.sliderValueToDate(slider.value[1]));
+        }"
                     valueFormat="{ (value) => {
-                        const date = window.sliderValueToDate(value);
-                        return window.formatDate(date)
-                        }
-                    }"
+            const date = window.sliderValueToDate(value);
+            return window.formatDate(date)
+            }
+        }"
                 />
 
                 <Card width="100%" height="800px">
