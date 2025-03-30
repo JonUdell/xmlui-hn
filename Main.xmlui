@@ -1,26 +1,59 @@
-    <App logo="resources/xmlui-logo.svg">
+<App
+    inspect="true"
+    layout="horizontal"
+    logo="resources/xmlui-logo.svg"
+    defaultTone="light"
+    defaultTheme="earthtone"
+>
 
-        <NavPanel>
-            <NavLink label="Home" to="/" />
-            <NavLink label="Posts" to="/search" />
-            <NavLink label="Sources" to="/sources" />
-        </NavPanel>
-        <Pages>
-            <Page url="/">
-                <InfoCards />
-                <MentionsPage />
-            </Page>
-            <Page url="/search">
-                <SearchPage />
-            </Page>
-            <Page url="/sources">
-                <SourcesChart />
-            </Page>
-        </Pages>
+    <AppHeader>
+        <Select
+            id="pickTheme"
+            width="30%"
+            initialValue="earthtone"
+            onDidChange="(newTheme) => setTheme(newTheme)"
+        >
+            <Option value="earthtone" label="earthtone (markdown-aware)" />
+            <Option value="github" label="github (markdown-aware)" />
+            <Option value="twilight-oasis" label="twilight-oasis (markdown-aware)" />
+            <Option value="xmlui" label="xmlui (markdown-unaware)" />
+            <Option value="xmlui-cyan" label="xmlui-cyan (markdown-unaware)" />
+            <Option value="xmlui-gray" label="xmlui-gray (markdown-unaware)" />
+            <Option value="xmlui-green" label="xmlui-green (markdown-unaware)" />
+            <Option value="xmlui-purple" label="xmlui-purple (markdown-unaware)" />
+            <Option value="xmlui-orange" label="xmlui-orange (markdown-unaware)" />
+        </Select>
+
+        <Button
+            variant="ghost"
+            icon="{activeThemeTone === 'light' ? 'moon' : 'sun'}"
+            onClick="setThemeTone(activeThemeTone === 'dark' ? 'light' : 'dark')"
+        />
+
+    </AppHeader>
+    <NavPanel>
+        <NavLink label="Home" to="/" />
+        <NavLink label="Posts" to="/search" />
+        <NavLink label="Sources" to="/sources" />
+    </NavPanel>
+    <Pages>
+        <Page url="/">
+            <InfoCards />
+            <MentionsPage />
+        </Page>
+        <Page url="/search">
+            <SearchPage />
+        </Page>
+        <Page url="/sources">
+            <SourcesChart />
+        </Page>
+    </Pages>
 
 
-        <Footer>
+    <Footer>
+        <Text>
             Powered by XMLUI
-        </Footer>
+        </Text>
+    </Footer>
 
-    </App>
+</App>

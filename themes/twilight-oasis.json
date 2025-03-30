@@ -1,0 +1,98 @@
+{
+  "name": "Twilight Oasis",
+  "id": "twilight-oasis",
+  "themeVars": {
+    "--- App-bound root theme variables": "",
+    "space-base": "0.25rem",
+
+    "color-surface-50": "hsl(200, 15%, 98%)",
+    "color-surface-100": "hsl(200, 15%, 95%)",
+    "color-surface-200": "hsl(200, 15%, 90%)",
+    "color-surface-300": "hsl(200, 15%, 80%)",
+    "color-surface-400": "hsl(200, 15%, 70%)",
+    "color-surface-500": "hsl(200, 15%, 60%)",
+    "color-surface-600": "hsl(200, 15%, 50%)",
+    "color-surface-700": "hsl(200, 15%, 40%)",
+    "color-surface-800": "hsl(200, 15%, 30%)",
+    "color-surface-900": "hsl(200, 15%, 20%)",
+    "color-surface-950": "hsl(200, 15%, 13%)",
+    "color-surface": "$color-surface-500",
+
+    "color-primary-50": "hsl(180, 50%, 97%)",
+    "color-primary-100": "hsl(180, 50%, 94%)",
+    "color-primary-200": "hsl(180, 50%, 88%)",
+    "color-primary-300": "hsl(180, 50%, 78%)",
+    "color-primary-400": "hsl(180, 50%, 68%)",
+    "color-primary-500": "hsl(180, 50%, 55%)",
+    "color-primary-600": "hsl(180, 50%, 45%)",
+    "color-primary-700": "hsl(180, 50%, 35%)",
+    "color-primary-800": "hsl(180, 50%, 25%)",
+    "color-primary-900": "hsl(180, 50%, 18%)",
+    "color-primary-950": "hsl(180, 50%, 12%)",
+
+    "color-secondary-50": "hsl(25, 60%, 98%)",
+    "color-secondary-100": "hsl(25, 60%, 95%)",
+    "color-secondary-200": "hsl(25, 60%, 90%)",
+    "color-secondary-300": "hsl(25, 60%, 80%)",
+    "color-secondary-400": "hsl(25, 60%, 70%)",
+    "color-secondary-500": "hsl(25, 60%, 60%)",
+    "color-secondary-600": "hsl(25, 60%, 50%)",
+    "color-secondary-700": "hsl(25, 60%, 40%)",
+    "color-secondary-800": "hsl(25, 60%, 30%)",
+    "color-secondary-900": "hsl(25, 60%, 20%)",
+    "color-secondary-950": "hsl(25, 60%, 13%)",
+
+
+    "borderRadius-Admonition": "$space-4",
+    "marginTop-Admonition": "1rem",
+    "marginTop-Blockquote": "1rem",
+    "padding-Admonition": "1rem",
+    "padding-Blockquote": ".5rem",
+    "marginBottom-Admonition": "1rem",
+    "marginBotton-Blockquote": "1rem",
+    "iconSize-Admonition": "1.5rem",
+
+    "light": {
+        "backgroundColor": "$transparent",
+        "backgroundColor-AppHeader": "$color-surface-100",
+        "backgroundColor-NavPanel": "$color-surface-100",
+        "backgroundColor-Admonition": "$color-secondary-50",
+        "backgroundColor-Blockquote": "$color-secondary-50",
+
+        "backgroundColor-Text-markdown": "$transparent",
+        "backgroundColor-Text-codefence": "$color-secondary-50",
+
+        "textColor-Text-markdown": "$color-primary-950",
+        "textColor-Text-codefence": "$color-primary-950",
+
+        "accent-Blockquote": "$color-secondary-200",
+        "accentWidth-Blockquote": "3px",
+
+        "textColor-primary": "$color-primary-650",
+        "textColor-H1": "$color-primary-950",
+        "textColor-Link": "$color-secondary-800",
+        "textColor-NavLink": "$color-primary-950",
+        "textColor-Footer": "$color-primary-950"
+      },
+      "dark": {
+        "backgroundColor": "black",
+        "backgroundColor-AppHeader": "black",
+        "backgroundColor-NavPanel": "black",
+        "backgroundColor-Blockquote": "black",
+        "backgroundColor-Admonition": "black",
+
+        "backgroundColor-Text-markdown": "black",
+        "backgroundColor-Text-codefence": "black",
+
+        "textColor-Text-markdown": "$color-primary-200",
+        "textColor-Text-codefence": "$color-primary-200",
+
+        "accent-Blockquote": "$color-secondary-800",
+        "accentWidth-Blockquote": "3px",
+
+        "textColor-H1": "white",
+        "textColor-NavLink": "$color-surface-50",
+        "textColor-Footer": "$color-surface-50"
+      }
+  }
+}
