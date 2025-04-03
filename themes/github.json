@@ -5,93 +5,12 @@
     "--- App-bound root theme variables": "",
     "space-base": "0.25rem",
 
-    "color-surface-50": "hsl(210, 20%, 98%)",
-    "color-surface-100": "hsl(210, 16%, 95%)",
-    "color-surface-200": "hsl(210, 14%, 89%)",
-    "color-surface-300": "hsl(210, 12%, 80%)",
-    "color-surface-400": "hsl(210, 10%, 70%)",
-    "color-surface-500": "hsl(210, 9%, 60%)",
-    "color-surface-600": "hsl(210, 8%, 50%)",
-    "color-surface-700": "hsl(210, 10%, 40%)",
-    "color-surface-800": "hsl(210, 12%, 30%)",
-    "color-surface-900": "hsl(210, 14%, 20%)",
-    "color-surface-950": "hsl(210, 16%, 15%)",
-    "color-surface": "$color-surface-500",
-
-    "color-primary-50": "hsl(212, 100%, 97%)",
-    "color-primary-100": "hsl(212, 100%, 95%)",
-    "color-primary-200": "hsl(212, 100%, 90%)",
-    "color-primary-300": "hsl(212, 100%, 80%)",
-    "color-primary-400": "hsl(212, 100%, 70%)",
-    "color-primary-500": "hsl(212, 100%, 60%)",
-    "color-primary-600": "hsl(212, 100%, 45%)",
-    "color-primary-700": "hsl(212, 100%, 35%)",
-    "color-primary-800": "hsl(212, 100%, 25%)",
-    "color-primary-900": "hsl(212, 100%, 15%)",
-    "color-primary-950": "hsl(212, 100%, 10%)",
-
-    "color-secondary-50": "hsl(340, 70%, 97%)",
-    "color-secondary-100": "hsl(340, 70%, 94%)",
-    "color-secondary-200": "hsl(340, 70%, 90%)",
-    "color-secondary-300": "hsl(340, 70%, 80%)",
-    "color-secondary-400": "hsl(340, 70%, 70%)",
-    "color-secondary-500": "hsl(340, 70%, 60%)",
-    "color-secondary-600": "hsl(340, 70%, 45%)",
-    "color-secondary-700": "hsl(340, 70%, 35%)",
-    "color-secondary-800": "hsl(340, 70%, 25%)",
-    "color-secondary-900": "hsl(340, 70%, 15%)",
-    "color-secondary-950": "hsl(340, 70%, 10%)",
-
-    "borderRadius-Admonition": "$space-4",
-    "marginTop-Admonition": "1rem",
-    "marginTop-Blockquote": "1rem",
-    "padding-Admonition": "1rem",
-    "padding-Blockquote": ".5rem",
-    "marginBottom-Admonition": "1rem",
-    "marginBotton-Blockquote": "1rem",
-    "iconSize-Admonition": "1.5rem",
+    "color-primary": "hsl(212, 60%, 30%)",
+    "color-secondary": "hsl(210, 12%, 35%)",
 
     "light": {
-      "backgroundColor": "$transparent",
-      "backgroundColor-AppHeader": "$color-surface-100",
-      "backgroundColor-NavPanel": "$color-surface-100",
-      "backgroundColor-Admonition": "$color-secondary-50",
-      "backgroundColor-Blockquote": "$color-secondary-50",
-
-      "backgroundColor-Text-markdown": "$transparent",
-      "backgroundColor-Text-codefence": "$color-secondary-50",
-
-      "textColor-Text-markdown": "$color-primary-950",
-      "textColor-Text-codefence": "$color-primary-950",
-
-      "accent-Blockquote": "$color-secondary-200",
-      "accentWidth-Blockquote": "3px",
-
-      "textColor-primary": "$color-primary-650",
-      "textColor-H1": "$color-primary-950",
-      "textColor-Link": "$color-secondary-800",
-      "textColor-NavLink": "$color-primary-950",
-      "textColor-Footer": "$color-primary-950"
     },
     "dark": {
-      "backgroundColor": "black",
-      "backgroundColor-AppHeader": "black",
-      "backgroundColor-NavPanel": "black",
-      "backgroundColor-Blockquote": "black",
-      "backgroundColor-Admonition": "black",
-
-      "backgroundColor-Text-markdown": "black",
-      "backgroundColor-Text-codefence": "black",
-
-      "textColor-Text-markdown": "$color-primary-200",
-      "textColor-Text-codefence": "$color-primary-200",
-
-      "accent-Blockquote": "$color-secondary-800",
-      "accentWidth-Blockquote": "3px",
-
-      "textColor-H1": "white",
-      "textColor-NavLink": "$color-surface-50",
-      "textColor-Footer": "$color-surface-50"
     }
   }
 }

@@ -2,6 +2,7 @@
     inspect="true"
     layout="horizontal"
     logo="resources/xmlui-logo.svg"
+    logo-dark="resources/logo-dark.svg"
     defaultTone="light"
     defaultTheme="earthtone"
 >
@@ -13,15 +14,14 @@
             initialValue="earthtone"
             onDidChange="(newTheme) => setTheme(newTheme)"
         >
-            <Option value="earthtone" label="earthtone (markdown-aware)" />
-            <Option value="github" label="github (markdown-aware)" />
-            <Option value="twilight-oasis" label="twilight-oasis (markdown-aware)" />
-            <Option value="xmlui" label="xmlui (markdown-unaware)" />
-            <Option value="xmlui-cyan" label="xmlui-cyan (markdown-unaware)" />
-            <Option value="xmlui-gray" label="xmlui-gray (markdown-unaware)" />
-            <Option value="xmlui-green" label="xmlui-green (markdown-unaware)" />
-            <Option value="xmlui-purple" label="xmlui-purple (markdown-unaware)" />
-            <Option value="xmlui-orange" label="xmlui-orange (markdown-unaware)" />
+            <Option value="earthtone" label="earthtone" />
+            <Option value="github" label="github" />
+            <Option value="xmlui" label="xmlui " />
+            <Option value="xmlui-cyan" label="xmlui-cyan " />
+            <Option value="xmlui-gray" label="xmlui-gray " />
+            <Option value="xmlui-green" label="xmlui-green " />
+            <Option value="xmlui-purple" label="xmlui-purple " />
+            <Option value="xmlui-orange" label="xmlui-orange " />
         </Select>
 
         <Button
