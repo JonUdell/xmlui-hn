@@ -1,8 +1,8 @@
 <Component name="InfoCard">
-    
+
     <DataSource id="data" url="{ window.xmluiHost + '/query' }" body='{ $props.sql }' method="POST" />
 
-    <Card width="12%" gap="0" title="{$props.title}">
+    <Card title="{$props.title}">
         <Items data="{data}">
             <Text>{$item.value}</Text>
         </Items>

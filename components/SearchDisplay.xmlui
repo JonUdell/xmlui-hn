@@ -27,11 +27,6 @@
 
     <Column canSort="true" bindTo="descendants" width="40px"  header="comments" />
 
-    <Column canSort="true" bindTo="url" width="3*">
-      <Link to="{$item.url}" target="_blank">
-        { $item.url }
-      </Link>
-    </Column>
 
     <Column header="fave" width="35px">
       <Checkbox initialValue="{$item.fave == 1}">
@@ -63,7 +58,7 @@
     onDidChange="(newRange) => ( sliderRange.setValue(newRange) )"
   />
 
-    <TextBox
+    <TextBoxd
       width="10%"
       id="sliderRange"
     />

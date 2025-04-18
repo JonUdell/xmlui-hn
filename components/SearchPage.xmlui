@@ -4,7 +4,7 @@
     var.endDate="{ window.endDate }"
 >
 
-    <VStack>
+    <VStack inspect="true">
         <HStack verticalAlignment="center">
             <Text>
                 search for:

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="xmlui/0.9.5.js"></script>
+    <script src="xmlui/0.9.11.js"></script>
     <script src="xmlui/charts-0.1.12.js"></script>
     <script>
         window.xmluiHost = "http://hn.jonudell.info/xmlui-hn";
@@ -243,7 +243,8 @@
         const dateDiffInDays = (d1, d2) => Math.floor((d2 - d1) / MS_PER_DAY);
 
         window.minDate = new Date('2022-06-30');
-        window.maxDate = new Date('2025-03-24');
+        const now = new Date();
+        window.maxDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
         // Define date conversion functions first
         window.dateToSliderValue = function (date) {
