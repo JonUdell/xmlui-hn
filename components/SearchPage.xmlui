@@ -1,4 +1,5 @@
 <Component
+    xmlns:XMLUIExtensions="component-ns"
     name="SearchPage"
     var.startDate="{ window.startDate }"
     var.endDate="{ window.endDate }"

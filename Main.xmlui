@@ -5,6 +5,7 @@
     logo-dark="resources/logo-dark.svg"
     defaultTone="light"
     defaultTheme="earthtone"
+    xmlns:XMLUIExtensions="component-ns"
 >
 
     <AppHeader>
@@ -36,7 +37,7 @@
         <NavLink label="Posts" to="/search" />
         <NavLink label="Sources" to="/sources" />
     </NavPanel>
-    <Pages>
+    <Pages inspect="true">
         <Page url="/">
             <InfoCards />
             <MentionsPage />
