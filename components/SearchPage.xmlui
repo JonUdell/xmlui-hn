@@ -41,7 +41,7 @@
             id="limit"
             width="15%"
             startText="limit: "
-            initialValue='1000'
+            initialValue='5000'
         />
     </HStack>
 

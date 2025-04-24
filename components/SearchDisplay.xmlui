@@ -14,12 +14,12 @@
 
 
   <Table id="table" data="{data}">
-    <Column canSort="true" bindTo="id">
+    <Column width="100px" canSort="true" bindTo="id">
       <Link to="{'https://news.ycombinator.com/item?id=' + $item.id}" target="_blank">
         { $item.id }
       </Link>
     </Column>
-    <Column canSort="true" bindTo="title" width="4*" />
+    <Column canSort="true" bindTo="title" width="2*" />
     <Column canSort="true" bindTo="by"    width="100px" minWidth="100px" />
     <Column canSort="true" bindTo="time"  width="100px" />
 
@@ -39,6 +39,9 @@
         </event>
       </Checkbox>
     </Column>
+
+    <Column canSort="true" bindTo="url"/>
+
 
   </Table>
 

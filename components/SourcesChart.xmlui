@@ -52,7 +52,7 @@
 
                 <H1>Stories by day for {domains.value} </H1>
 
-                <Slider
+                <Slider inspect="true"
                     id="slider"
                     label="dateRange"
                     minValue="{0}"
@@ -76,7 +76,7 @@
                     }"
                 />
 
-                <Card width="100%" height="800px">
+                <Card inspect="true" width="100%" height="800px">
                     <XMLUIExtensions:BarChart
                         layout="vertical"
                         data="{daysSources.value}"
