@@ -6,9 +6,9 @@
     <VStack>
         <H1>{$props.title}</H1>
 
-        <Card width="400px" height="300px">
-            <XMLUIExtensions:DonutChart
-            data="{mentions}" 
+        <Card padding="20px" width="600px" height="300px">
+           <XMLUIExtensions:DonutChart
+            data="{mentions}"
             dataKey="mentions" nameKey="name"
             showLabel="true"
          />
