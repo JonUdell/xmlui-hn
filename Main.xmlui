@@ -33,7 +33,12 @@
     </NavPanel>
     <Pages>
         <Page url="/">
-            <SearchPage />
+            <Fragment when="window.dbInitialized">
+                <SearchPage />
+            </Fragment>
+            <Fragment when="! window.dbInitialized">
+                <Text>Loading data...</Text>
+            </Fragment>
         </Page>
         <Page url="/dashboard">
             <InfoCards />

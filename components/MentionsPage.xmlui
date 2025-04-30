@@ -1,6 +1,6 @@
 <Component name="MentionsPage">
 
-    <H1>Articles mentioning these:</H1>
+    <H1>Mentions</H1>
 
     <FlowLayout>
 

@@ -8,8 +8,13 @@
 >
 
 
-  <DataSource id="data" url="sqlite:memory" method="POST" dataType="sql"
-    body="{ window.searchWrapper(start, end, term, option, limit) }" />
+  <DataSource
+      id="data"
+      url="sqlite:memory"
+      dataType="sql"
+      inProgressNotificationMessage="window.inProgressMessage"
+      body="{ window.searchWrapper(start, end, term, option, limit) }"
+    />
 
 
   <Table id="table" data="{data}">
