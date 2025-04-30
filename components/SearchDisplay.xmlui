@@ -8,9 +8,8 @@
 >
 
 
-  <DataSource id="data" url="{ window.xmluiHost + '/query' }"
-    rawBody="{ window.searchWrapper(start, end, term, option, limit) }" method="POST" />
-
+  <DataSource id="data" url="sqlite:memory" method="POST" dataType="sql"
+    body="{ window.searchWrapper(start, end, term, option, limit) }" />
 
 
   <Table id="table" data="{data}">
@@ -20,27 +19,15 @@
       </Link>
     </Column>
     <Column canSort="true" bindTo="title" width="2*" />
-    <Column canSort="true" bindTo="by"    width="100px" minWidth="100px" />
-    <Column canSort="true" bindTo="time"  width="100px" />
-
-    <Column canSort="true" bindTo="score" width="40px" />
-
-    <Column canSort="true" bindTo="descendants" width="40px"  header="comments" />
-
-
-    <Column header="fave" width="35px">
-      <Checkbox initialValue="{$item.fave == 1}">
-        <event name="didChange">
-          <APICall
-            method="post"
-            url="{ window.xmluiHost + '/query' }"
-            body="{ window.favorite($item.id, $item.fave === 1 ? 0 : 1) }"
-          />
-        </event>
-      </Checkbox>
+    <Column canSort="true" bindTo="by"    width="100px" minWidth="100px">
+      <Link to="{'https://news.ycombinator.com/user?id=' + $item.by}" target="_blank">
+        { $item.by }
+      </Link>
     </Column>
-
-    <Column canSort="true" bindTo="url"/>
+    <Column canSort="true" bindTo="time"  width="100px" />
+    <Column canSort="true" bindTo="score" width="60px" />
+    <Column canSort="true" bindTo="descendants" width="60px"  header="comments" />
+    <Column canSort="true" bindTo="url"   width="2*" />
 
 
   </Table>

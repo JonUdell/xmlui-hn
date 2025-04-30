@@ -1,11 +1,10 @@
 <Component name="InfoCards">
     <FlowLayout>
-        <InfoCard width="12%" title="stories" sql='{window.sql.stories}' />
-        <InfoCard width="12%" title="ask hn" sql='{window.sql.askhn}' />
-        <InfoCard width="12%" title="show hn" sql='{window.sql.showhn}' />
-        <InfoCard width="12%" title="days" sql='{window.sql.days}' />
-        <InfoCard width="12%" title="oldest" sql='{window.sql.oldest}' />
-        <InfoCard width="12%" title="newest" sql='{window.sql.newest}' />
-        <InfoCard width="12%" title="max score" sql='{window.sql.maxscore}' />
+        <InfoCard width="*" title="stories" sql='{window.sql.stories}' />
+        <InfoCard width="*" title="ask hn" sql='{window.sql.askhn}' />
+        <InfoCard width="*" title="show hn" sql='{window.sql.showhn}' />
+        <InfoCard width="*" title="oldest" sql='{window.sql.oldest}' />
+        <InfoCard width="*" title="newest" sql='{window.sql.newest}' />
+        <InfoCard width="*" title="max score" sql='{window.sql.maxscore}' />
     </FlowLayout>
 </Component>

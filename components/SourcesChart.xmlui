@@ -10,12 +10,13 @@
 
     <DataSource
         id="daysSources"
-        url="{ window.xmluiHost + '/query' }"
-        body="{ window.daysSources(domains.value, debouncedStartDate, debouncedEndDate, queryCounter % 2 === 0) }"
-        method="POST" />
+        url="sqlite:memory"
+        method="POST"
+        dataType="sql"
+        body="{ window.daysSources(domains.value, debouncedStartDate, debouncedEndDate, queryCounter % 2 === 0) }" />
 
-    <DataSource id="distinctSources" url="{ window.xmluiHost + '/query' }"
-        body="{ window.distinctSources(selectedDomain.value) }" method="POST"
+    <DataSource id="distinctSources" url="sqlite:memory" method="POST" dataType="sql"
+        body="{ window.distinctSources(selectedDomain.value) }"
     />
 
     <VStack inspect="true">
@@ -49,10 +50,9 @@
 
             <VStack width="70%">
 
-
                 <H1>Stories by day for {domains.value} </H1>
 
-                <Slider inspect="true"
+                <Slider
                     id="slider"
                     label="dateRange"
                     minValue="{0}"

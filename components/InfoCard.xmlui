@@ -1,6 +1,6 @@
 <Component name="InfoCard">
 
-    <DataSource id="data" url="{ window.xmluiHost + '/query' }" body='{ $props.sql }' method="POST" />
+    <DataSource id="data" url="sqlite:memory" method="POST" dataType="sql" body='{ $props.sql }' />
 
     <Card title="{$props.title}">
         <Items data="{data}">

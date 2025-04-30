@@ -4,69 +4,57 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="xmlui/0.9.17.js"></script>
+    <script src="xmlui/in-memory-sqlite.js"></script>
     <script src="xmlui/charts-0.1.12.js"></script>
-    <script src="xmlui/xmlui-devtools-0.1.12.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.13.0/sql-wasm.js'></script>
     <script>
         window.xmluiHost = "http://hn.jonudell.info/xmlui-hn";
 
-        window.startDate = '2025-01-01'
+        window.startDate = '2025-01-10'
         window.endDate = '2025-04-15'
+
+        window.minDate = new Date(window.startDate)
+        window.maxDate = new Date(window.endDate)
 
         window.mentions = function (names, days) {
             const jsonNames = JSON.stringify(names.split(",").map((n) => n.trim())); // Ensure valid JSON array
 
             const query = `
-        WITH names AS (
-            SELECT value AS name FROM json_each('${jsonNames}')
+        with names as (
+            select value as name from json_each('${jsonNames}')
         ),
-        counts AS (
-            SELECT
+        counts as (
+            select
                 names.name,
-                COUNT(*) AS mentions
-            FROM hn
-            JOIN names ON LOWER(hn.title) LIKE '%' || LOWER(names.name) || '%'
-            WHERE
+                count(*) as mentions
+            from hn
+            join names on lower(hn.title) like '%' || lower(names.name) || '%'
+            where
                 time >= datetime('now', '-${days} days')
-            GROUP BY names.name
+            group by names.name
         )
-        SELECT name, mentions
-        FROM counts
-        WHERE mentions > 0 and name != ''
-        ORDER BY mentions DESC;
+        select name, mentions
+        from counts
+        where mentions > 0 and name != ''
+        order by mentions desc;
     `;
 
             return query;
-        };
-
-        window.favorite = function (id, fave) {
-            const query = "update hn set fave = " + fave + " where id = " + id;
-            return { sql: query };
         };
 
         window.searchCombined = function (params = {}) {
             const {
                 term = "",
                 option = "all",
-                start = getDefaultStartDate(), // today - 7 days
-                end = getDefaultEndDate(), // today
+                start = window.startDate,
+                end = window.endDate,
                 limit = 500,
             } = params;
 
             const whereClause = buildWhereClause(term, option, start, end);
             const query = buildQuery(whereClause, limit);
-            return query;
+            return query; // Now returns an object directly
         };
-
-        function getDefaultEndDate() {
-            return new Date().toISOString().slice(0, 10);
-        }
-
-        function getDefaultStartDate() {
-            return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-                .toISOString()
-                .slice(0, 10);
-        }
 
         function buildWhereClause(term, option, start, end) {
             const conditions = [];
@@ -89,22 +77,22 @@
                 );
             }
 
-            return conditions.length > 0 ? "WHERE " + conditions.join(" AND ") : "";
+            return conditions.length > 0 ? "where " + conditions.join(" and ") : "";
         }
 
         function buildQuery(whereClause, limit) {
             const sql =
-                `SELECT id, ` +
-                `replace(substr(time, 0, 11), '-', '/') AS time, ` +
+                `select id, ` +
+                `replace(substr(time, 0, 11), '-', '/') as time, ` +
                 `title, by, ` +
-                `CAST(score AS integer) AS score, ` +
-                `CAST(descendants AS integer) AS descendants, ` +
+                `cast(score as integer) as score, ` +
+                `cast(descendants as integer) as descendants, ` +
                 `url, fave ` +
-                `FROM hn ${whereClause} ` +
-                `ORDER BY time DESC, CAST(score AS integer) DESC ` +
-                `LIMIT ${limit}`;
+                `from hn ${whereClause} ` +
+                `order by time desc, cast(score as integer) desc ` +
+                `limit ${limit}`;
 
-            return JSON.stringify({ sql });
+            return { sql };
         }
 
         window.searchWrapper = function (start, end, term, option, limit) {
@@ -117,7 +105,6 @@
             });
         };
 
-        // Add this to your index.html script section
         window.queryCache = {};
 
         window.daysSources = function (domain, minDate, maxDate, forceRefresh = false) {
@@ -195,14 +182,16 @@
             return { sql: query }
         };
 
-
         window.mentionNames = {
             company:
                 "amazon,amd,apple,cloudflare,facebook,google,ibm,intel,microsoft,mozilla,netflix,openai,tesla,tiktok,toshiba,twitter,sony,spacex,stripe,uber,zendesk,",
             language:
                 "c#,clojure,css,erlang,golang,haskell,html,javascript,json,php,python,rust,sql,swift,typescript,webassembly,wasm,xml,",
             db: "clickhouse,citus,couchdb,db2,duckdb,mongodb,mysql,oracle,postgres,redis,sql server,timescale,sqlite,supabase,steampipe,yugabyte,",
+            os: "android,linux,ios,macos,windows,"
+
         };
+
         window.sql = {
             stories: { sql: "select count(*) as value from hn" },
             days: {
@@ -217,31 +206,15 @@
             oldest: { sql: "select substr(min(time),0,11) as value from hn" },
             newest: { sql: "select substr(max(time),0,11) as value from hn" },
             maxscore: { sql: "select max(score) as value from hn" },
-            companymentions30: {
-                sql: window.mentions(window.mentionNames.company, 30),
-            },
-            companymentions90: {
-                sql: window.mentions(window.mentionNames.company, 90),
-            },
-            languagementions30: {
-                sql: window.mentions(window.mentionNames.language, 30),
-            },
-            languagementions90: {
-                sql: window.mentions(window.mentionNames.language, 90),
-            },
-            dbmentions30: { sql: window.mentions(window.mentionNames.db, 30) },
+            companymentions90: { sql: window.mentions(window.mentionNames.company, 90) },
+            languagementions90: { sql: window.mentions(window.mentionNames.language, 90) },
             dbmentions90: { sql: window.mentions(window.mentionNames.db, 90) },
+            osmentions90: { sql: window.mentions(window.mentionNames.os, 90) },
         };
-    </script>
 
-    <script>
         const MS_PER_DAY = 86400 * 1000;
 
         const dateDiffInDays = (d1, d2) => Math.floor((d2 - d1) / MS_PER_DAY);
-
-        window.minDate = new Date('2025-01-01');
-        const now = new Date();
-        window.maxDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
         // Define date conversion functions first
         window.dateToSliderValue = function (date) {
@@ -256,8 +229,8 @@
         const totalDays = dateDiffInDays(window.minDate, window.maxDate);
         window.totalRange = totalDays;
 
+        window.initialStartValue = 0; totalDays - 100;
         window.initialEndValue = totalDays;
-        window.initialStartValue = totalDays - 90;
 
         // Now use the functions after they're defined
         window.initialStartDate = window.sliderValueToDate(window.initialStartValue).toISOString().slice(0, 10);
@@ -280,6 +253,122 @@
     </script>
 </head>
 
-<body></body>
+<body>
+    <script>
+        // Set to true to enable loader debug logs
+        window.loaderDebug = false;
+
+        config = {
+            locateFile: filename => `https://sql.js.org/dist/${filename}`
+        }
+
+        window.dbInitialized = false;
+
+        // Initialize SQL.js and load the pre-populated database from data.db
+        initSqlJs(config).then(function (SQL) {
+            console.log("SQL.js initialized, loading database file...");
+
+            // Fetch the database file from the current directory
+            fetch('data.db')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to load database file: ${response.status} ${response.statusText}`);
+                    }
+                    return response.arrayBuffer();
+                })
+                .catch(err => {
+                    console.error("Error loading database file:", err);
+                    throw err;
+                })
+                .then(buffer => {
+                    // Create a database using the pre-populated file
+                    const uInt8Array = new Uint8Array(buffer);
+                    console.log(`Loaded database file (${uInt8Array.length} bytes)`);
+
+                    // Create the database from the file
+                    window.db = new SQL.Database(uInt8Array);
+
+                    // Set the initialization flag when done
+                    window.dbInitialized = true;
+                    console.log("SQLite database loaded successfully");
+
+                    // Log table schema and row count to verify loading
+                    const tables = window.db.exec("SELECT name FROM sqlite_master WHERE type='table';");
+                    console.log("Database tables:", tables);
+
+                    if (tables && tables[0] && tables[0].values) {
+                        tables[0].values.forEach(table => {
+                            const tableName = table[0];
+                            const count = window.db.exec(`SELECT COUNT(*) FROM ${tableName}`)[0].values[0][0];
+                            console.log(`Table ${tableName}: ${count} rows`);
+
+                            // Show schema
+                            const schema = window.db.exec(`PRAGMA table_info(${tableName})`)[0];
+                            console.log(`Schema for ${tableName}:`, schema);
+                        });
+                    }
+                })
+        }).catch(err => {
+            console.error("Failed to initialize SQL.js:", err);
+        });
+
+        // Wait for database initialization with retry mechanism
+        const waitForDb = function (maxWaitTime = 5000, checkInterval = 50) {
+            return new Promise((resolve, reject) => {
+                const startTime = Date.now();
+
+                function checkDb() {
+                    if (window.dbInitialized && window.db) {
+                        resolve(window.db);
+                        return;
+                    }
+
+                    const elapsedTime = Date.now() - startTime;
+                    if (elapsedTime > maxWaitTime) {
+                        reject(new Error(`Timed out waiting for SQLite database initialization after ${maxWaitTime}ms`));
+                        return;
+                    }
+
+                    setTimeout(checkDb, checkInterval);
+                }
+
+                checkDb();
+            });
+        };
+
+        window.query = function (sql, params) {
+            return new Promise((resolve, reject) => {
+                // Wait for the database to be initialized before executing the query
+                waitForDb()
+                    .then(db => {
+                        try {
+                            const stmt = db.prepare(sql);
+
+                            // Bind parameters if provided
+                            if (params && Array.isArray(params)) {
+                                params.forEach((param, index) => {
+                                    stmt.bind({ [index + 1]: param });
+                                });
+                            }
+
+                            const rows = [];
+                            while (stmt.step()) {
+                                rows.push(stmt.getAsObject());
+                            }
+                            stmt.free();
+                            resolve(rows);
+                        } catch (error) {
+                            console.error("Error executing SQLite query:", error);
+                            reject(error);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Database initialization error:", error);
+                        reject(error);
+                    });
+            });
+        };
+    </script>
+</body>
 
 </html>

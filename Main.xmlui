@@ -18,11 +18,6 @@
             <Option value="earthtone" label="earthtone" />
             <Option value="github" label="github" />
             <Option value="xmlui" label="xmlui " />
-            <Option value="xmlui-cyan" label="xmlui-cyan " />
-            <Option value="xmlui-gray" label="xmlui-gray " />
-            <Option value="xmlui-green" label="xmlui-green " />
-            <Option value="xmlui-purple" label="xmlui-purple " />
-            <Option value="xmlui-orange" label="xmlui-orange " />
         </Select>
 
         <Button
@@ -34,16 +29,16 @@
     </AppHeader>
     <NavPanel>
         <NavLink label="Home" to="/" />
-        <NavLink label="Posts" to="/search" />
+        <NavLink label="Dashboard" to="/dashboard" />
         <NavLink label="Sources" to="/sources" />
     </NavPanel>
     <Pages inspect="true">
         <Page url="/">
+            <SearchPage />
+        </Page>
+        <Page url="/dashboard">
             <InfoCards />
             <MentionsPage />
-        </Page>
-        <Page url="/search">
-            <SearchPage />
         </Page>
         <Page url="/sources">
             <SourcesChart />
