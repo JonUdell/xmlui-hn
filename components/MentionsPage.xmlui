@@ -2,18 +2,26 @@
 
     <H1>Mentions</H1>
 
-    <FlowLayout>
+    <Fragment when="! window.dbInitialized">
+        <Text>Loading data...</Text>
+    </Fragment>
 
-        <HStack>
-            <MentionsChart title="Companies" sql='{window.sql.companymentions90}' />
-            <MentionsChart title="Languages" sql='{window.sql.languagementions90}' />
-        </HStack>
+    <Fragment when="window.dbInitialized">
+        <FlowLayout>
 
-        <HStack>
-            <MentionsChart title="Databases" sql='{window.sql.dbmentions90}' />
-            <MentionsChart title="Operating Systems" sql='{window.sql.osmentions90}' />
-        </HStack>
+            <HStack>
+                <MentionsChart title="Companies" sql='{window.sql.companymentions90}' />
+                <MentionsChart title="Languages" sql='{window.sql.languagementions90}' />
+            </HStack>
 
-    </FlowLayout>
+            <HStack>
+                <MentionsChart title="Databases" sql='{window.sql.dbmentions90}' />
+                <MentionsChart title="Operating Systems" sql='{window.sql.osmentions90}' />
+            </HStack>
+
+        </FlowLayout>
+    </Fragment>
+
+
 
 </Component>

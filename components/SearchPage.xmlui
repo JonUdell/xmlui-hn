@@ -21,6 +21,7 @@
             </RadioGroup>
         </HStack>
     </VStack>
+
     <HStack>
         <DatePicker
             startText="start"
@@ -45,12 +46,19 @@
         />
     </HStack>
 
-    <SearchDisplay
-        start="{startDate}"
-        end="{endDate}"
-        term="{term.value}"
-        option="{options.value}"
-        limit="{limit.value.length === 0 ? 10 : limit.value}"
-    />
+    <Fragment when="! window.dbInitialized">
+        <Text>Loading data...</Text>
+    </Fragment>
+
+    <Fragment when="window.dbInitialized">
+        <SearchDisplay
+            start="{startDate}"
+            end="{endDate}"
+            term="{term.value}"
+            option="{options.value}"
+            limit="{limit.value.length === 0 ? 10 : limit.value}"
+        />
+    </Fragment>
+
 
 </Component>

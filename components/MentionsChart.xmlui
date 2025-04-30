@@ -8,17 +8,19 @@
         inProgressNotificationMessage="window.inProgressMessage"
     />
 
+
     <VStack>
         <H2>{$props.title}</H2>
 
         <Card padding="20px" width="600px" height="350px">
-           <XMLUIExtensions:DonutChart
-            data="{mentions}"
-            dataKey="mentions" nameKey="name"
-            showLabel="true"
-         />
+            <XMLUIExtensions:DonutChart
+                data="{mentions}"
+                dataKey="mentions" nameKey="name"
+                showLabel="true"
+            />
         </Card>
 
     </VStack>
+
 
 </Component>

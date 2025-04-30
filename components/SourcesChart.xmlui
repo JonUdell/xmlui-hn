@@ -6,7 +6,7 @@
     var.queryCounter="0"
     var.lastSliderUpdate="{ Date.now() }"
     var.debouncedStartDate="{ window.initialStartDate }"
-    var.debouncedEndDate="{ window.initialEndDate }" >
+    var.debouncedEndDate="{ window.initialEndDate }">
 
     <DataSource
         id="daysSources"
@@ -14,10 +14,10 @@
         dataType="sql"
         inProgressNotificationMessage="window.inProgressMessage"
         body="{ window.daysSources(domains.value, debouncedStartDate, debouncedEndDate, queryCounter % 2 === 0) }"
-     />
+    />
 
 
-     <DataSource
+    <DataSource
         id="distinctSources"
         url="sqlite:memory"
         dataType="sql"
@@ -25,83 +25,90 @@
         body="{ window.distinctSources(selectedDomain.value) }"
     />
 
-    <VStack inspect="true">
+    <Fragment when="! window.dbInitialized">
+        <Text>Loading data...</Text>
+    </Fragment>
 
-        <AutoComplete
-            width="30%"
-            id="domains"
-            initialValue="{selectedDomain}">
-            <Items data="{distinctSources}">
-                <Option value="{$item.domain}" label="{$item.domain}" />
-            </Items>
-        </AutoComplete>
+    <Fragment when="window.dbInitialized">
+        <VStack>
 
-        <HStack>
+            <AutoComplete
+                width="30%"
+                id="domains"
+                initialValue="{selectedDomain}">
+                <Items data="{distinctSources}">
+                    <Option value="{$item.domain}" label="{$item.domain}" />
+                </Items>
+            </AutoComplete>
 
-            <VStack width="30%">
+            <HStack>
 
-                <Table
-                    data="{distinctSources}"
-                >
-                    <Column bindTo="domain" canSort="true">
-                        <!--
-                    <Link to="/sources" label="{$item.domain}"  />
-                   -->
-                        <Link label="{$item.domain}" onClick="selectedDomain = $item.domain" />
-                    </Column>
-                    <Column bindTo="count" canSort="true" />
-                </Table>
+                <VStack width="30%">
 
-            </VStack>
+                    <Table
+                        data="{distinctSources}"
+                    >
+                        <Column bindTo="domain" canSort="true">
+                            <!--
+                        <Link to="/sources" label="{$item.domain}"  />
+                       -->
+                            <Link label="{$item.domain}" onClick="selectedDomain = $item.domain" />
+                        </Column>
+                        <Column bindTo="count" canSort="true" />
+                    </Table>
 
-            <VStack width="70%">
+                </VStack>
 
-                <H1>Stories by day for {domains.value} </H1>
+                <VStack width="70%">
 
-                <Slider
-                    id="slider"
-                    label="dateRange"
-                    minValue="{0}"
-                    maxValue="{window.totalRange}"
-                    initialValue="{ [window.initialStartValue, window.initialEndValue] }"
-                    step="1"
-                    width="90%"
-                    onDidChange="{
-                        const now = Date.now();
-                        if (now - lastSliderUpdate > throttleDelay) {
-                            debouncedStartDate = window.sliderValueToDate(slider.value[0]).toISOString().slice(0, 10);
-                            debouncedEndDate = window.sliderValueToDate(slider.value[1]).toISOString().slice(0, 10);
-                            lastSliderUpdate = now;
-                            queryCounter = queryCounter + 1;
-                        }
-                    }"
-                    valueFormat="{ (value) => {
-                        const date = window.sliderValueToDate(value);
-                        return window.formatDate(date)
-                        }
-                    }"
-                />
+                    <H1>Stories by day for {domains.value} </H1>
 
-                <Card width="100%" height="800px">
-                    <XMLUIExtensions:BarChart
-                        layout="vertical"
-                        data="{daysSources.value}"
-                        dataKeys="{['stories']}" nameKey="day"
-                        showLabel="true"
-                        tickFormatter="{(value) => {
-                        return getDate(value).toLocaleDateString('en-CA', {
-                            year: '2-digit',
-                            month: '2-digit',
-                            day: '2-digit'
-                        }).replaceAll('-', '/');
-                        }}"
+                    <Slider
+                        id="slider"
+                        label="dateRange"
+                        minValue="{0}"
+                        maxValue="{window.totalRange}"
+                        initialValue="{ [window.initialStartValue, window.initialEndValue] }"
+                        step="1"
+                        width="90%"
+                        onDidChange="{
+                            const now = Date.now();
+                            if (now - lastSliderUpdate > throttleDelay) {
+                                debouncedStartDate = window.sliderValueToDate(slider.value[0]).toISOString().slice(0, 10);
+                                debouncedEndDate = window.sliderValueToDate(slider.value[1]).toISOString().slice(0, 10);
+                                lastSliderUpdate = now;
+                                queryCounter = queryCounter + 1;
+                            }
+                        }"
+                        valueFormat="{ (value) => {
+                            const date = window.sliderValueToDate(value);
+                            return window.formatDate(date)
+                            }
+                        }"
                     />
-                </Card>
-            </VStack>
 
-        </HStack>
+                    <Card width="100%" height="800px">
+                        <XMLUIExtensions:BarChart
+                            layout="vertical"
+                            data="{daysSources.value}"
+                            dataKeys="{['stories']}" nameKey="day"
+                            showLabel="true"
+                            tickFormatter="{(value) => {
+                            return getDate(value).toLocaleDateString('en-CA', {
+                                year: '2-digit',
+                                month: '2-digit',
+                                day: '2-digit'
+                            }).replaceAll('-', '/');
+                            }}"
+                        />
+                    </Card>
+                </VStack>
 
-    </VStack>
+            </HStack>
+
+        </VStack>
+    </Fragment>
+
 
 
 </Component>
