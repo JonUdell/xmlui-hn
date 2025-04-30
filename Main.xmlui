@@ -1,5 +1,4 @@
 <App
-    inspect="true"
     layout="horizontal"
     logo="resources/xmlui-logo.svg"
     logo-dark="resources/logo-dark.svg"
@@ -32,7 +31,7 @@
         <NavLink label="Dashboard" to="/dashboard" />
         <NavLink label="Sources" to="/sources" />
     </NavPanel>
-    <Pages inspect="true">
+    <Pages>
         <Page url="/">
             <SearchPage />
         </Page>
